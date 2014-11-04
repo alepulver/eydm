@@ -1,0 +1,194 @@
+---
+title: 'TP5: Discriminant Analysis'
+author: "Alejandro Pulver"
+date: "07/03/2014"
+output:
+  html_document:
+    toc: true
+#    highlight: zenburn
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+#opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis')
+opts_chunk$set(warning=FALSE, message=FALSE, results='asis')
+```
+
+```{r}
+library(gdata)
+library(MASS)
+library(DiscriMiner)
+#library(candisc)
+library(pander)
+panderOptions("table.split.table" , Inf) # avoid to split the tables
+library(lattice)
+library(ggplot2)
+```
+
+## Ejercicio 1
+
+La base de datos `Barotro2.XLS` consiste en 37 registros geoposicionales que informan sobre las coordenadas en las cuales 37 tormentas se transformaron en huracanes, para 2 clasificaciones de huracanes: *Baro* y *Trop*. Estos datos son ficticios y pertenecen a Elsner, Lehmiller, and Kimberlain (1996).
+
+```{r}
+ejercicio_1 <- read.xls('../tp5/Barotro2.XLS')
+```
+
+### Realice un análisis discriminante teniendo como objetivo la clasificación de los huracanes
+
+Vamos a construír una función para distinguir las modalidades de *Clase*, utilizando los valores de *Longitud* y *Latitud*.
+
+```{r}
+fit <- lda(Clase ~ Longitud + Latitud, data = ejercicio_1)
+```
+
+### Encuentre la expresión de la función discriminante
+
+La función discriminante consiste en:
+
+* transformar los datos al espacio generado (componentes principales)
+* transformar las medias de los datos originales al espacio generado
+* calcular el promedio de las medias de las categorías (en este caso porque son dos solamente)
+* para cada observación: si es mayor que la última, es de la categoría con media más alta y si no es de la otra
+
+```{r}
+projected.data = as.matrix(ejercicio_1[,1:2]) %*% fit$scaling
+projected.means = fit$means %*% fit$scaling
+projected.center = mean(projected.means)
+
+predicted.first = projected.data < projected.center
+predicted.second = projected.data > projected.center
+
+pander(cbind(fit$means, projected.means))
+```
+
+### ¿Qué cantidad de huracanes han sido bien clasificados? ¿Qué opina sobre este resultado?
+
+```{r}
+confusion.matrix = table(ejercicio_1$Clase, predict(fit, ejercicio_1)$class)
+pander(confusion.matrix)
+```
+
+Como se ve en la matriz de confusión, se clasificaron todos correctamente. Es raro que esto ocurra.
+
+### Apóyese en el uso de gráficos para entender el resultado del ítem anterior
+
+Este es un histograma sobre el eje principal, mostrando que los grupos quedan a ambos lados del valor donde la función discriminante los separa.
+
+```{r}
+plot(fit)
+```
+
+## Ejercicio 3
+
+La base de datos `ADSTUDY1.XLS` contiene 25 variables y 50 registros ficticios. La idea es que 50 individuos evalúan dos publicidades de reconocidas bebidas "cola". El objetivo es clasificar el sexo de los individuos, tomando en cuenta variables de medición de cualidades de cada una de las dos publicidades.
+
+Las variables de medición se encuentran en *MEDICIÓN 1* a *MEDICIÓN 23*.	La variable de clasificación será *SEXO*. 
+
+```{r}
+ejercicio_3 <- read.xls('../tp5/ADSTUDY1.XLS', fileEncoding='latin1')
+```
+
+### Analice el conjunto de datos.
+
+Tenemos `r dim(ejercicio_3)[1]` observaciones y `r dim(ejercicio_3)[2]` variables.
+
+Una de ellas es el nombre, que no nos sirve para el análisis y otra es el *Sexo* que es la categoría.
+
+### Desarrolle una regla de clasificación que se pudiera utilizar para discriminar los 2 grupos
+
+```{r}
+fit <- lda(Sexo ~ ., data = ejercicio_3[,-1])
+```
+
+### Determine cuán buena es la regla para clasificar todo el conjunto de datos.
+
+```{r}
+confusion.matrix = table(ejercicio_3[,-1]$Sexo, predict(fit, ejercicio_3[,-1])$class)
+pander(confusion.matrix)
+```
+
+La precisión del clasificador es `r 100 * sum(diag(confusion.matrix)) / sum(confusion.matrix)`%.
+
+### Determine cuan buena es la regla para clasificar cada una de las categorías
+
+```{r}
+accurary = 100 * diag(confusion.matrix) / colSums(confusion.matrix)
+pander(cbind(names(confusion.matrix), accurary))
+```
+
+### ¿Cumple el conjunto de datos con los supuestos del análisis discriminante? ¿Existe algún otro inconveniente con esta base de datos?
+
+```{r}
+hist(apply(ejercicio_3[,-c(1,2)], 2, var),
+     main = "Histograma de varianzas de las variables",
+     xlab = "Varianza", ylab = "Cantidad de variables")
+```
+
+Las varianza no parece ser la misma para cada variable.
+
+Otro inconveniente es que solamente se extrajo una componente principal, esto quiere decir que hay mucha correlación entre las variables.
+
+```{r}
+ejercicio_3.cor = cor(ejercicio_3[,-c(1,2)])
+levelplot(ejercicio_3.cor, scales=list(x=list(rot=90)),
+          main="Matriz de correlación")
+
+```
+
+## Ejercicio 9
+
+La base de datos `SURVIVAL.XLS` consiste en 1207 registros generados al azar. Considerando las variables *Age*, *Time*, *Pathsize*, *Histgrad* y *Status*.
+
+```{r}
+ejercicio_9 <- read.csv('../tp5/SURVIVAL.csv', dec = ',')
+ejercicio_9 <- ejercicio_9[,c("STATUS", "AGE", "TIME", "PATHSIZE", "HISTGRAD")]
+ejercicio_9$HISTGRAD <- as.factor(ejercicio_9$HISTGRAD)
+ejercicio_9$STATUS <- as.factor(ejercicio_9$STATUS)
+```
+
+### Analice el conjunto de datos
+
+Tenemos `r dim(ejercicio_3)[1]` observaciones y `r dim(ejercicio_3)[2]` variables.
+
+Una de ellas es el *STATUS*, que será la categoría.
+
+```{r}
+splom(ejercicio_9, groups = ejercicio_9$STATUS)
+```
+
+### Determine si es posible desarrollar una regla de clasificación que se pudiera utilizar para discriminar los grupos
+
+```{r}
+fit <- lda(STATUS ~ AGE + TIME + PATHSIZE + HISTGRAD, data = ejercicio_9)
+confusion.matrix = table(ejercicio_9$STATUS, predict(fit, ejercicio_9)$class)
+pander(confusion.matrix)
+```
+
+Asignó todos los individuos al primer grupo, y ninguno al segundo. Esta regla no funciona bien, y una posible razón sería que hay dos órdenes de magnitud menos miembros del segundo grupo que del primero (requiriendo una diferencia muy grande para superar la probabilidad a priori de que pertenezca al segundo).
+
+### Determine el valor de cada una de las funciones de clasificación
+
+La transformación al espacio de componentes principales es:
+
+```{r}
+pander(fit$scaling)
+```
+
+Y las medias:
+
+```{r}
+pander(fit$means)
+```
+
+Luego la función es igual que como se describió en el primer ejercicio.
+
+### ¿Cuáles son las probabilidades posteriores para los pacientes clasificados en forma errónea?
+
+Como son bastantes, las graficaremos en un histograma.
+
+```{r}
+predicted_classes = predict(fit, ejercicio_9)$class
+ejercicio_9.incorrect = predicted_classes != ejercicio_9$STATUS
+ejercicio_9.posterior = predict(fit, ejercicio_9)$posterior[ejercicio_9.incorrect,]
+qplot(apply(ejercicio_9.posterior, 1, max), geom = "histogram", xlab = "Probabilidades posteriores")
+```

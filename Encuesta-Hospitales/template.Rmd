@@ -1,0 +1,23 @@
+## `r capitalize(gsub("_", " ", var))`
+
+```{r, fig.width=4, fig.height=5}
+ggplot(df, aes_string(x=var, fill="urgencia")) + geom_bar() + theme(axis.text.x = element_text(angle = 90), axis.title.x = element_text(hjust = 0)) + labs(fill="Urgencia", x=gsub("_", " ", var), y="Cantidad")
+```
+
+```{r}
+pander(my.factor_table(encuesta[[var]]))
+```
+
+```{r}
+p.value <- chisq.test(df$urgencia, df[[var]])$p.value
+result = if (p.value < 0.01) {
+    sprintf("La prueba de Chi cuadrado sugiere una alta dependencia entre `%s` y `%s` (p << 0.05).", "urgencia", var)
+} else if (p.value < 0.05) {
+  sprintf("La prueba de Chi cuadrado sugiere dependencia entre `%s` y `%s` (p < 0.05).", "urgencia", var)  
+} else if (p.value < 0.1) {
+  sprintf("La prueba de Chi cuadrado sugiere una leve dependencia entre `%s` y `%s` (0.05 < p < 0.1).", "urgencia", var)
+} else {
+  sprintf("La prueba de Chi cuadrado para la relación entre `%s` y `%s` resulta no significativa.", "urgencia", var)
+}
+cat(result)
+```

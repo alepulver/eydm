@@ -1,0 +1,8 @@
+*~
+*.html
+*.pdf
+*_files
+*_cache
+.Rproj.user
+.RData
+.Rhistory

@@ -1,0 +1,115 @@
+---
+title: 'TP1: Pizzas'
+author: "Alejandro Pulver"
+date: "04/13/2014"
+output: pdf_document
+---
+
+```{r, message=FALSE}
+library(GGally)
+library(pander)
+panderOptions("table.split.table" , Inf) # avoid to split the tables
+library(lattice)
+library(pheatmap)
+library(plotrix)
+library(aplpack)
+source("utils.R")
+```
+
+Responder a los siguientes ítems sobre los  datos de la selección al azar de 41 pizzas congeladas reunidos en distintos supermercados. Como bien recordará, cada una de las pizzas se trituró y se mezcló, y se tomó una muestra de la mezcla para realizar un análisis de sustancias nutritivas. 
+
+```{r}
+load("pizzas.Rda")
+pizzas.df <- pizzas[,-c(1,2)]
+```
+
+Las variables medidas fueron: el porcentaje de humedad (PH) y, por cada 100g de muestra, la cantidad de proteína (PROT), la cantidad de grasa (GRA), la cantidad de ceniza (CEN), la cantidad de sodio (SOD), y la cantidad de carbohidratos (CARB), así como las calorías por gramo de la misma (CAL).
+
+Aquí decidimos si estandarizar o no los datos previamente:
+
+```{r}
+#pizzas.df <- scale(pizzas.df)
+```
+
+- Estudie mediante estadísticos (media, mediana, etc.) o gráficos descriptivos adecuados (box-plot, barras, etc.) la base para obtener una primera aproximación de la información contenida en estas variables. 
+
+```{r, results='asis'}
+pander(summary(pizzas))
+```
+
+```{r, fig.width=15, fig.height=15, cache=TRUE}
+ggpairs(pizzas.df, axisLabels='show',
+        diag = list(continuous = "density", discrete = "bar"),
+        upper = list(continuous = "smooth", discrete = "ratio"))
+```
+
+- ¿Observa la presencia de puntos aislados o valores raros en alguna de las variables?
+
+Sí, en los scatter plots se ven puntos aislados. Pero si queremos considerar outliers en una sola variable, alcanza con graficar las observaciones ordenadas para buscar saltos.
+
+```{r}
+my.quantiles(pizzas.df)
+```
+
+También puede hacerse con los boxplots.
+
+```{r, fig.width=4, fig.height=7}
+my.boxplots(pizzas.df)
+```
+
+- ¿Cómo es la distribución de cada una de las variables? ¿Simétrica, uniforme, acampanada...?
+
+```{r, message=FALSE}
+my.density(pizzas.df)
+```
+
+- Realice un gráfico de líneas que una las medias de cada una de las siete variables.
+
+```{r}
+#ggplot(stack(sapply(pizzas[,-c(1:2)], mean)), aes(x=ind,y=values)) + geom_point()
+#xyplot(values ~ ind, stack(sapply(pizzas[,-c(1:2)], mean)), type="a")
+ggparcoord(pizzas.df, 1:dim(pizzas.df)[2])
+```
+
+- Realice un gráfico de rayos de los datos. ¿Puede identificar casos similares?
+
+```{r, fig.width=8, fig.height=8}
+radial.plot(pizzas.df, rp.type = "p", labels = names(pizzas.df))
+```
+
+- Realice una nube de puntos de las variables CEN y CARB ¿Están relacionadas estas variables? 
+
+```{r}
+ggplot(pizzas.df, aes(CEN, CARB)) + geom_point() + geom_smooth(method=lm)
+```
+
+- Calcule la covarianza entre las variables CEN y CARB. Calcule la correlación. ¿Encuentra posible relación lineal entre las variables? ¿Concuerda su respuesta con lo observado en el ítem anterior?
+
+```{r}
+cov(pizzas$CEN, pizzas$CARB)
+cor(pizzas$CEN, pizzas$CARB)
+```
+
+- Observe la matriz de correlaciones. ¿Entre que valores se encuentran todas las correlaciones? ¿Son altas o bajas? ¿Cuáles son los pares de variables más correlacionados? ¿Y los menos correlacionados? 
+
+```{r, results='asis'}
+pizzas.cor <- cor(pizzas[,-c(1:2)])
+pander(pizzas.cor)
+```
+
+- Realice un gráfico de matriz de correlación. ¿Cómo se presentan los puntos?
+
+```{r}
+levelplot(pizzas.cor)
+pheatmap(pizzas.cor)
+```
+
+- Estandarice las variables y repita los ítems a) a g) del ejercicio.
+
+Alcanza con quitar el comando para estandarizar al comienzo.
+
+- Caras de Chernoff
+
+```{r, fig.width=10, fig.height=10}
+faces(pizzas[,-c(1,2)])
+```

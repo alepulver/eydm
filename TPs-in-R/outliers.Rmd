@@ -1,0 +1,143 @@
+---
+title: "Outliers"
+author: "Alejandro Pulver"
+date: "04/12/2014"
+output: pdf_document
+---
+
+```{r, message=FALSE}
+library(pander)
+panderOptions("table.split.table" , Inf) # avoid to split the tables
+library(ggplot2)
+library(GGally)
+library(lattice)
+library(pastecs)
+options(scipen=100, digits=2)
+library(psych)
+library(gridExtra)
+library(tabplot)
+source("utils.R")
+```
+
+## Gorriones
+
+Primero importamos la tabla ya preprocesada.
+
+```{r}
+load("gorriones.Rda")
+```
+
+Algunas medidas resumen para tener una idea de los datos.
+
+```{r, results='asis'}
+pander(t(stat.desc(gorriones)))
+```
+
+### Gráficos
+
+Histogramas de todas las variables por separado.
+
+```{r, fig.width=13, fig.height=7, cache=TRUE}
+gorriones.df = gorriones[2:7]
+gorriones.num = gorriones[2:6]
+
+my.multiplot(gorriones.df, function(df,var) {
+  ggplot(df, aes_string(x=var, fill="Sobrevida")) +
+    geom_density(alpha = 0.4)
+}, rejectFunc = function(df,var) { is.factor(df[[var]]) })
+```
+
+Boxplots de todas las variables por separado, a su vez diferenciados por sobrevivientes o no.
+
+```{r, cache=TRUE}
+my.multiplot(gorriones.df, function(df,var) {
+  ggplot(df, aes_string(x="Sobrevida", y=var)) +
+    geom_boxplot(outlier.colour = "red") +
+    geom_jitter()
+}, rejectFunc = function(df,var) { is.factor(df[[var]]) })
+```
+
+Scatterplots de a pares, coloreados por supervivencia.
+
+```{r, fig.width=10, fig.height=10, cache=TRUE}
+splom(~ gorriones.num, groups = gorriones$Sobrevida)
+ggpairs(gorriones.df)
+#ggparcoord(gorriones[2:6])
+```
+
+Aunque no está en la consigna, esto se puede tratar con [regresión logística](http://www.ats.ucla.edu/stat/r/dae/logit.htm).
+
+```{r, results='asis'}
+model <- glm(formula = gorriones$Sobrevida ~ ., family = "binomial", data = gorriones.num)
+pander(anova(model))
+```
+
+## Internet
+
+Veamos las variables y sus tipos.
+
+```{r}
+load("internet.Rda")
+internet.df <- internet[,-1]
+internet.df.factors <- sapply(names(internet.df), function(x) { is.factor(internet.df[[x]]) })
+str(internet)
+```
+
+Ahora realizamos un resumen de ellas.
+
+```{r, results='asis'}
+pander(psych::describe(internet.df))
+pander(summary(internet.df[internet.df.factors]))
+```
+
+De las categóricas, estudiamos las proporciones de cada una.
+
+```{r}
+my.multiplot(internet.df, function(df,var) {
+  qplot(df[[var]], xlab=var)
+}, varNames = colnames(internet.df[internet.df.factors]))
+```
+
+De las numéricas, vemos si hay correlaciones entre ellas en general.
+
+Como esta figura tiene demasiados puntos, podemos forzar a que sea una imagen incluso en el PDF con las opciones correspondientes. Si dejamos que sea vectorizada, al visualizar el documento, tardará más el programa para abrir PDFs.
+
+```{r, cache=TRUE, fig.ext='png', dpi=300, fig.width=7, fig.height=7}
+#ggpairs(internet[internet.factors])
+#my.boxplots(internet[!internet.factors])
+splom(~ internet.df[!internet.df.factors], groups = internet.df$Sexo, alpha = 0.35)
+```
+
+Ahora podemos ver cómo varían las distribuciones según las variables categóricas.
+
+```{r, cache=TRUE}
+my.multiplot(internet.df, function(df,var) {
+  ggplot(df, aes_string(x="Sexo", y=var)) +
+    geom_boxplot(outlier.colour = "red") +
+    geom_jitter(alpha=I(1/10), aes(color=Sexo))
+}, varNames = colnames(internet.df[!internet.df.factors]))
+
+my.multiplot(internet.df, function(df,var) {
+  ggplot(df, aes_string(x="Nacionalidad", y=var)) +
+    geom_boxplot(outlier.colour = "red") +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+}, varNames = colnames(internet.df[!internet.df.factors]))
+
+my.multiplot(internet.df, function(df,var) {
+  ggplot(df, aes_string(x="Sitio", y=var)) +
+    geom_boxplot(outlier.colour = "red")
+}, varNames = colnames(internet.df[!internet.df.factors]))
+```
+
+Estos gráficos también se pueden usar para detectar outliers.
+
+```{r, cache=TRUE}
+my.quantiles(internet.df)
+my.outliers(internet.df)
+```
+
+Y finalmente uno exploratorio de todo, usando el paquete `tabplot`.
+
+```{r}
+tableplot(internet.df[,-1])
+```

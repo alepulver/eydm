@@ -1,0 +1,81 @@
+---
+title: "Performance of image decomposition"
+author: "Alejandro Pulver"
+date: "05/01/2014"
+output: html_document
+---
+
+```{r, message=FALSE}
+library(ggplot2)
+library(plyr)
+#library(timeit)
+#library(pander)
+source("utils.R")
+```
+
+In this article we'll compare the performance of many SVD/eigen decomposition algorithms for greyscale images. They may perform very differently for more rectangular or sparse matrices, for example.
+
+```{r, echo=FALSE, message=FALSE}
+# SVD libraries
+library(corpcor)
+library(irlba)
+library(QZ)
+library(rARPACK)
+library(svd)
+
+methods = list(
+  list(name = "eigen", func = function(m, nc) {
+    eigen(m %*% t(m))
+  }),
+  list(name = "svd", func = function(m, nc) {
+    svd(m, nu=nc, nv=nc)
+  }),
+  list(name = "fast.svd", func = function(m, nc) {
+    fast.svd(m)
+  }),
+  list(name = "irlba", func = function(m, nc) {
+    irlba(m, nu=nc, nv=nc)
+  }),
+  list(name = "QZ", func = function(m, nc) {
+    geigen(m %*% t(m))
+  }),
+  list(name = "rARPACK", func = function(m, nc) {
+    svds(m, nc)
+  }),
+  list(name = "propack", func = function(m, nc) {
+    propack.svd(m, nc)
+  }),
+  list(name = "trlan", func = function(m, nc) {
+    trlan.svd(m, nc)
+  })
+)
+```
+
+We have a `images` folder with a few files, and a list of algorithms. For all possible combinations, a time will be calculated.
+
+```{r, cache=TRUE}
+imageFiles <- dir("images")
+
+svdTimes <- ldply(imageFiles, function(imgName) {
+  imgRGB <- my.readImage(sprintf("images/%s", imgName))
+  img <- my.rgb2grey(imgRGB)
+  
+  ldply(methods, function(alg) {  
+    prof <- system.time({alg$func(img, 100)})
+    #time <- prof[["user.self"]] + prof[["user.child"]]
+    time <- prof[["elapsed"]]
+    
+    data.frame(image=imgName, method=alg$name, time=time)
+  })
+})
+
+save(svdTimes, file="svdTimes.Rda")
+```
+
+And here are the results, note that **eigen** and **QZ** obtain all singular values because they operate on `m*t(m)`. The rest were asked for the 100 largest ones.
+
+```{r, fig.width=10, fig.height=7}
+load("svdTimes.Rda")
+df <- svdTimes[svdTimes$method != "QZ",]
+ggplot(df, aes(x=method, y=time)) + geom_boxplot() + geom_jitter()
+```

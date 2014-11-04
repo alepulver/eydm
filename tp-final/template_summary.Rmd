@@ -1,0 +1,42 @@
+### Análisis exploratorio
+
+Variables numéricas que no fueron alteradas.
+
+```{r}
+my.multiplot(df[,nonLogVars], my.histogram, is.numeric)
+```
+
+Variables numéricas originales que fueron alteradas, antes de aplicar la transformación.
+
+```{r}
+my.multiplot(df[,logVars], my.histogram, is.numeric)
+```
+
+Variables numéricas luego de aplicar `log(1+x)`.
+
+```{r}
+for (n in logVars) { if (is.numeric(df[[n]])) df[[n]] = log1p(df[[n]])}
+my.multiplot(df[,logVars], my.histogram, is.numeric)
+```
+
+Luego tenemos las siguientes variables categóricas.
+
+```{r}
+my.multiplot(df, my.barplot, is.factor)
+```
+
+Veamos ahora los valores faltantes por variable.
+
+```{r, echo=FALSE}
+if (sum(is.na(df)) > 0) {
+  pander(my.missing_values(df))
+} else {
+  pander("No hay.")
+}
+```
+
+Ahora graficaremos las correlaciones entre variables numéricas, para luego encontrar relaciones y explicarlas.
+
+```{r, fig.width=7, fig.height=7}
+my.corrplot(df)
+```

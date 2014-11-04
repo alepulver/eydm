@@ -1,0 +1,319 @@
+---
+title: "Programas de compresión"
+author: "Alejandro Pulver"
+date: "07/06/2014"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    toc: yes
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+#opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis')
+opts_chunk$set(warning=FALSE, message=FALSE, results='asis', cache=TRUE, echo=FALSE)
+
+library(pander)
+panderOptions("table.split.table" , Inf) # avoid to split the tables
+```
+
+```{r}
+load("tables.Rda")
+source("utils.R")
+library(lattice)
+library(ClustOfVar)
+library(ggbiplot)
+library(MASS)
+library(randomForest)
+
+datasets <- list(
+  "Compression Ratings" = compression_ratings,
+  "Squeeze Chart" = squeeze_chart.programs,
+  "Maximum Compression" = maximum_compression
+#  "World Compression Challenge" = world_compression_challenge
+)
+
+my.corrplot = function(df) {
+  numerics = sapply(names(df), function(x) { is.numeric(df[[x]]) })
+  correlations = cor(df[,numerics])
+  levelplot(correlations, scales=list(x=list(rot=90)),
+            main="Matriz de correlación")
+}
+```
+
+# Introducción
+
+El problema de la compresión de datos, a grandes rasgos, consiste en encontrar una representación de los mismos más eficiente en términos de espacio pero que sea posible de revertir para volver a obtener los datos originales.
+
+Existen dos clases de compresión:
+
+- con pérdida de información (conocida como *lossy*, utilizada generalmente para imágenes, sonido y video)
+- sin pérdida de información (conocida como *lossless*, utilizada generalmente para documentos)
+
+## Objetivos
+
+En este trabajo vamos a analizar resultados de programas que implementan distintos métodos de compresión sin pérdida de información. Como el propósito general es ceder tiempo a cambio de ganar espacio, nos interesa cuánto se redujo el archivo original, y cuánto tiempo se tarda en su codificación o decodificación.
+
+## Conjuntos de datos
+
+Se consideraron las siguientes fuentes:
+
+- [Squeeze Chart](http://www.squeezechart.com/)
+- [Maximum Compression](http://www.maximumcompression.com/data/summary_mf.php)
+- [Compression Ratings](http://compressionratings.com/sort.cgi?rating_sum.full+15nr)
+- [World Compression Challenge](http://heartofcomp.altervista.org/MOC/MOCA.htm)
+
+El proceso de importar los datos no fue fácil, ya que hubo que extraer variables dentro de cadenas de caracteres (fechas, porcentajes, etc) sin tabular. Pero pudo automatizarse con funciones específicas para cada caso.
+
+Finalmente se obtuvieron los siguientes conjuntos:
+
+```{r, results='asis'}
+pander(datasets.summary(datasets))
+```
+
+Aunque algunos programas aparecen en dos o más de ellos, no se pueden mezclar los resultados ya que los datos de prueba (es decir, los archivos utilizados para comprimir) son distintos para cada conjunto y en distinta proporción.
+
+Si bien podría aplicarse una corrección según el porcentaje de datos en cada categoría (asumiendo que dentro de ellas las muestras elegidas son representativas y el N suficientemente grande), no lo haremos.
+
+Por ello, analizaremos cada conjunto de datos por separado, aprovechando las ventajas de cada uno para contestar preguntas.
+
+# Desarrollo
+
+## Transformaciones de los datos
+
+Además de codificar correctamente los factores, fechas, porcentajes y números de la entrada original, se realizaron otros cambios.
+
+Las columnas en *Bytes* se convirtieron a *Megabytes*, dividiendo por `r 1024*1024`. Esto no afecta las relaciones lineales entre variables, pero hace más fácil su lectura.
+
+Se observó que muchas variables numéricas tenían una distribución exponencial, por lo que se les aplicó el logaritmo. Como algunos valores eran cero, utilizamos `log(1+x)` para evitar valores negativos.
+
+## Análisis exploratorio
+
+Se hará por separado, para cada conjunto.
+
+## Modelos
+
+Se hará por separado, para cada conjunto.
+
+# Conjuntos
+
+## Squeeze Chart
+
+```{r}
+df = data.frame(squeeze_chart.programs)
+logVars = c("encoding_time", "decoding_time", "age_in_years")
+nonLogVars = Filter(function(x) !(x %in% logVars), names(df))
+```
+
+```{r child='template_summary.Rmd'}
+```
+
+### Modelos
+
+En este conjunto había un gran número de valores faltantes para los tiempos de compresión y descompresión. Por eso no hay correlación entre ambas, mientras que en los otros conjuntos sí. Así que no utilizaremos esas columnas.
+
+#### Tipos de archivo
+
+Pero lo que sí tiene este, a diferencia de los otros, es cuánto comprime por categoría de archivo. Al hacer un dendrograma veremos qué tipos de archivo son más similares en su compresión (y por lo tanto en la estructura de su contenido).
+
+```{r, fig.width=7, fig.height=7}
+file_categories <- c("APP", "AUDIO_WAV", "CAMERA_RAW", "GUTENBERG", "INSTALLER", "MOBILE", "PGM_AND_PPM", "SOURCES", "XML")
+tree = hclustvar(df[,file_categories])
+plot(tree)
+```
+
+Se observan dos grandes grupos, y dentro de cada uno dos bien diferenciados. El primero de los grandes grupos corresponde a los archivos de texto (que utilizan solamente letras, números y símbolos), y el segundo a los binarios (que utilizan las 256 posibilidades de los bytes).
+
+Dentro del grupo de texto, tenemos por un lado códigos fuente y XML, y por el otro libros (Gutenberg) y secuencias de números separadas por espacio (PGM y PPM). Presumiblemente el primer subgrupo se parece por utilizar símbolos o variables, y el segundo subgrupo por tener "palabras" repetidas muchas veces.
+
+Dentro del grupo binario, hay un grupo de imágenes y audio (sin comprimir) y otro de instaladores y multimedia (ya comprimidos). El primer subgrupo se parece seguramente por representar digitalmente señales analógicas con cuantización en un espacio acotado, y el segundo subgrupo por ser difícil de comprimir (pues ya lo está).
+
+Es notable que con sólo la correlación entre compresibilidades, se pueda descubrir la similitud entre tipos de archivo con tanta precisión.
+
+#### GUI vs software libre
+
+Una pregunta interente es si los programas comerciales suele tener interface gráfica (GUI) mas frecuentemente que los de código abierto. Para ello utilizaremos el test de Chi-cuadrado sobre la tabla de contingencias (las filas son *gui* y las columnas *source_available*).
+
+```{r}
+pander(table(df$gui, df$source_available))
+test_result = chisq.test(df$gui, df$source_available)
+```
+
+El resultado indica que la diferencia es altamente significativa (p = `r test_result$p.value` << 0.005), y en el sentido que esperábamos.
+
+#### Clases de compresión
+
+Vamos a ver si es posible determinar qué clase de algoritmo de compresión uniliza un programa, dados sus tamaños comprimidos de los diferentes tipos de datos. Esto tiene sentido ya que podría ocurrir que algunos algoritmos compriman mejor los patrones encontrados en ciertos archivos que otros.
+
+La columna del tamaño total en realidad no es necesaria para esto, ya que es una combinación lineal de las otras (ponderado por el porcentaje de cada tipo de archivo en el conjunto de prueba).
+
+Como todas las variables son reales, podemos aplicar el análisis discriminante para su clasificación. Antes de eso, vamos a visualizar los grupos utilizando PCA.
+
+```{r, fig.width=8, fig.height=5}
+fit = prcomp(df[,file_categories])
+ggbiplot(fit, groups = df$class, scale = 0)
+```
+
+Podemos observar que la primera componente explica casi toda la varianza, y se podría utilizar directamente para clasificar. Aún así, utilizaremos LDA ya que nos construye automáticamente las funciones y podría mejorar la clasificación (el espacio resultante no es el mismo que vemos en la imagen de PCA).
+
+```{r, fig.width=7, fig.height=6}
+fit = lda(df[,file_categories], grouping = df$class)
+ggbiplot(fit, groups = df$class, scale = 1)
+```
+
+Veamos ahora la matriz de confusión.
+
+```{r}
+confusion.matrix = table(df$class, predict(fit, df[,file_categories])$class)
+pander(confusion.matrix)
+```
+
+La precisión del clasificador es `r 100 * sum(diag(confusion.matrix)) / sum(confusion.matrix)`%.
+
+Si bien no entrenamos con menos muestras que el total, el espacio es relativamente fácil de clasificar y otros como *Random Forests* o *SVM* andarían mucho mejor.
+
+## Maximum Compression
+
+```{r}
+df = data.frame(maximum_compression)
+logVars = c("Comp.time", "Decomp.time", "Efficiency")
+nonLogVars = Filter(function(x) !(x %in% logVars), names(df))
+```
+
+```{r child='template_summary.Rmd'}
+```
+
+### Modelos
+
+#### Agrupamiento
+
+Primero vamos a ver cuántos grupos hay en los datos con un dendrograma (podando las hojas).
+
+```{r}
+variables = c("Comp.time", "Decomp.time", "Efficiency", "Compression")
+distances = dist(df[,variables])
+tree = as.dendrogram(hclust(distances))
+plot(cut(x=tree, h=4)$upper)
+```
+
+Elegimos 6 grupos.
+
+```{r}
+set.seed(1) # obtain the same clusters each time we generate the report
+groups_fit = kmeans(df[,variables], 6, nstart = 5)
+groups_factor = as.factor(groups_fit$cluster)
+space_fit = prcomp(df[,variables])
+```
+
+Veamos cuántos elementos hay en cada uno, y cómo se distribuyen en PCA.
+
+Nótese que el algoritmo de clustering fue aplicado a los datos originales, y no a los mismos proyectados con PCA.
+
+```{r}
+pander(table(groups_factor))
+ggbiplot(space_fit, groups = groups_factor)
+```
+
+Ahora veremos mediante boxplots si los grupos elegidos tienen algún significado útil en el dominio actual.
+
+```{r, cache=FALSE}
+source("utils.R") # it seems caching changes environment
+my.multiplot(df[,variables], function(df,var) {
+    ggplot(df, aes_string(y=var, x="groups_factor")) +
+      geom_boxplot(outlier.colour = "red") + xlab("cluster")
+})
+```
+
+Veremos 5 representantes de cada grupo, antes de sacar conclusiones.
+
+```{r, cache=FALSE}
+# TODO: spider plot cluster centers?
+
+result = my.sample_clusters(df, groups_factor, 5)
+pander(result[,c("Pos", "Program", variables, "Group")])
+```
+
+En el grupo 1 quedaron los programas que más comprimen y más rápido, mientras que en el grupo 2 están los que sacrifican un poco de compresión para obtener más velocidad (pero sin perder demasiada eficiencia).
+
+El grupo 3 es más lento que el 1, pero no ofrece ventajas con respecto a la compresión (conviene no utilizarlo).
+
+El grupo 4 parece un outlier, pero en realidad corresponde a no usar ningún compresor (por lo que todas las variables quedan en cero, menos el tamaño que no estamos usando por ser el inverso de la compresión).
+
+El grupo 5 corresponde a los programas que sacrifican velocidad para obtener más compresión, con la misma eficiencia del grupo 2. Estos generalmente se utilizan en competencias o en casos especiales, pero son demasiado lentos para resultar útiles en general.
+
+El grupo 6 abarca los programas más antiguos que son a la vez lentos y comprimen poco (conviene no utilizarlo).
+
+## Compression Ratings
+
+```{r}
+df = data.frame(compression_ratings)
+nonLogVars = c("Better.Compressors", "Better.Decompressors", "Ratio", "Compression.CPU.Over.Time", "Decompression.CPU.Over.Time", "Rating.Ratio", "Performance.Ratio.Compression", "Performance.Ratio.Decompression", "Compression.Memory", "Decompression.Memory")
+logVars = Filter(function(x) !(x %in% nonLogVars), names(df))
+```
+
+```{r child='template_summary.Rmd'}
+```
+
+### Modelos
+
+#### Variables
+
+Disponemos de muchas variables, aunque con bastante correlación también. Las dimensiones reales (linealmente independientes) serán menos. Veamos cómo se agrupan:
+
+```{r, fig.width=7, fig.height=7}
+tree = hclustvar(df[,sapply(names(df), function(x) is.numeric(df[[x]]))])
+plot(tree)
+```
+
+Al ser corta la distancia vertical entre agrupamientos, indica que may mucha dependencia entre las variables en general.
+
+#### Programas
+
+Como se vio en los histogramas del análisis exploratorio, las observaciones consisten en programas ejecutados con ciertos parámetros (que afectan la memoria utilizada, el tiempo que demora y cuánto "esfuerzo" hace por comprimir).
+
+Intentaremos determinar el programa dadas las variables numéricas del dendrograma anterior, mediante un clasificador *Random Forests* (ya que por las características de los datos, *LDA* probablemente no funcione bien).
+
+Nos quedaremos con los programas que tengan 8 o más ejecuciones, utilizando el 65% de cada categoría para entrenar y el 35% restante para clasificar.
+
+```{r}
+variables = sapply(names(df), function(x) is.numeric(df[[x]]))
+subdf = subset(df, table(df$Program)[Program] >= 8)
+subdf$Program = droplevels(subdf$Program)
+train_set = my.stratified_sample(subdf$Program, 0.65)
+```
+
+Pero antes de ello, graficaremos las observaciones con sus respectivas categorías en las dos primeras componentes principales del espacio para tener una idea visual de su separación. Los elipses graficados son círculos en el espacio original, de radio acorde a la varianza del grupo con centro en la media, que al transformarse linealmente se aplastan y estiran.
+
+```{r, fig.width=8, fig.height=6}
+fit = prcomp(subdf[,variables])
+ggbiplot(fit, groups = subdf$Program, scale = 1, var.axes = FALSE, ellipse = TRUE)
+```
+
+Por la varianza explicada se entiende que hay mucha correlación entre las variables, y como habíamos especulado se podría representar todo con 2 o 3 dimensiones linealmente independientes. Ahora sí procederemos a entrenar el clisificador y predecir las categorías para obtener la matriz de confusión.
+
+```{r}
+fit = randomForest(x = subdf[train_set, variables], y = subdf[train_set,]$Program)
+test_prediction = predict(fit, subdf[-train_set, variables])
+confusion.matrix = table(subdf[-train_set,]$Program, test_prediction)
+
+pander(confusion.matrix)
+```
+
+La precisión del clasificador es `r 100 * sum(diag(confusion.matrix)) / sum(confusion.matrix)`%.
+
+# Links
+
+- http://fastcompression.blogspot.com.ar/2011/04/comparing-compressors-new-ranking.html
+- http://freearc.org/Maximal-Practical-Compression.aspx
+- http://compressionratings.com/rating_sum.html
+- http://www.maximumcompression.com/algoritms.php
+- http://www.maximumcompression.com/lossless_vs_lossy.php
+- http://heartofcomp.altervista.org/index.htm
+
+```{r, include=FALSE}
+#world_compression_challenge <- read.fwf('wcc_moc.txt', widths=c(6, 41, 12, 9, 9, 9, 9, 9, 23), stringsAsFactors = F)
+#str_match("FastLZ v.0.1 [TAR][Ariya Hidayat,RI]", perl('^(.+?)\\s*\\[(\\w+)\\]\\[(.+?),(.+?)\\]'))
+#str_match(world_compression_challenge$COMPRESSOR, perl('^([^[]+?)\\s*(\\[(\\w+)\\])?\\[(.+?),(.+?)\\]'))
+#results_time = str_match(compression_ratings$Total.Time, perl('^(((\\d+)h)\\s+)?(((\\d+)m)\\s)?((\\d)+s)?'))
+```

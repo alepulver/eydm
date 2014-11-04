@@ -1,0 +1,201 @@
+Iniciales de nombre y apellido,Sexo        1.       Fem.       2.      Masc.,Edad ,Escolaridad        0.           Sin estudios   1. Primaria 2. Secundaria           3. Universi- tarios o tercia- ríos,Motivo de consulta,Tiempo de síntomas 1.          1a 60'    2. 1a24hs 3. 1a7dias. 4.            + 7dias ,Domici-lio           1.      Caba.    2.      Pcia. Bs.As.  3. Int.pais,Naciona-lidad      1.     Argen-tino         2.         Extran-  Jero    ,Vive en el país?    0. No corres-ponde       1.           Si           2.          No    ,Cobertu-ra Social  1.          No tiene       2.       O.S.      3. Prepaga.,Consulto otra ins-titucion previa-mente?     1.            Si           2.         No       ,Fue derivado a esta institu-cion?    1.           Si           2.         No    ,Conoce los Ctros de Salud de Atención primaria 1.           Si           2.         No      ,Como llego a este Htal?  Reco-menda-cion?    1.           Si          2.          No     ,Como llego a este  Htal?     Medios de comuni-cación?         1.          Si          2.         No     ,Como llego a este Htal?      Deriva-cion me-dica?      1.           Si           2.          No       ,Por qué concurre a la Guardia? Percibe que lo van a atender más rápido? 1.          Si           2.         No     ,Concu-rrió a C.E.?      1.           Si           2.          No       ,Por qué no con-currio a C.E.?     0.      Otros     1.          No lo penso    2.             No había turno      3.     Tenía turno alejado,Control libro de Guardia.     Motivo de con- sulta,Control libro de Guardia.            Diagnós-tico de Egreso,Destino:    1. Interna-cion      2.    Observa-cion      3.     Deriva-cion C.E.      4.    Óbito     5. Se retira    6. Sin datos
+CH.C.,2,74,2,Hematu- ría,2,2,2,1,1,2,2,1,1,2,2,              1,2,1,,,5
+A.B.,1,65,1,Diarrea,4,2,1,0,2,1,2,1,2,1,2,1,2,1,,,3
+H.F.,2,27,3,Dolor y proctorragia,3,1,2,1,2,2,2,2,2,1,2,1,2,1,Proctalgia,,6
+B.R.,2,34,1,Proctorragia,3,2,1,0,1,2,2,1,1,2,2,1,1,1,Proctorragia,,3
+N.M.,1,71,2,Dolor abdomi-  mal + diarrea,3,2,1,0,2,2,1,2,1,2,2,1,1,3,,Diarrea aguda,3
+CH.A.,2,42,2,Dolor anal,4,1,2,1,1,2,2,2,1,2,2,1,2,1,Proctalgia,Hemorroides,3
+O.R.,1,57,1,Alteración hepato-   grama,4,2,1,0,1,1,1,2,2,2,1,1,2,1,,,3
+R.V.,1,35,3,Dolor abdomi-  nal,3,2,1,0,1,2,2,2,1,2,2,1,2,1,,ERGE,3
+R.J.,2,46,2,Alteración hepato-   grama,4,2,1,0,1,1,1,2,2,2,1,1,2,1,,,5
+T.L.,1,47,1,Dolor abdomi- nal,4,2,1,0,2,2,2,2,2,1,2,1,1,3,,Meteorismo,3
+B.E.,1,62,1,Inconti- nencia anal,3,2,2,1,1,2,2,1,1,2,2,1,1,3,,,5
+L.J.,2,55,1,Cirrosis hepática,4,2,1,0,1,1,1,2,2,2,1,1,2,1,Control,,3
+G.A.,1,66,1,Proble-  mas gastricos,4,2,1,0,2,1,2,2,1,2,2,1,1,3,,,3
+G.T.,1,44,1,Epigastral  gia,4,2,2,1,1,1,2,2,1,2,2,1,1,2,,Gastro- patía,3
+C.R.,1,44,1,Dolor abdomin- nal + fiebre,3,2,1,0,1,1,2,2,1,2,2,1,2,1,,,6
+R.S.,1,27,3,Paf operada,3,2,1,0,1,1,1,2,2,2,1,1,2,1,,Dispepsia,              3
+D.J.,2,34,2,Dolor epigastri-co,              4,              2,              2,              1,1,1,1,1,2,2,1,1,2,1,Diarrea con sangre,,6
+C.M.,1,29,2,Proctorra- gia,4,1,1,0,2,1,1,2,2,2,1,1,2,1,,,6
+L.J.,1,58,1,Dolor abdomi-nal,3,1,2,2,1,2,2,1,1,2,2,1,2,2,Dolor abdomi- nal+ fiebre,,2
+D.A.,2,34,2,Dolor epigastri- co,3,1,1,0,1,2,2,1,1,2,2,1,2,2,,Diarrea aguda,3
+A.J.,2,50,2,Colangitis por CPRE,4,2,1,0,1,1,1,1,1,2,2,1,1,2,,,3
+L.L.,2,20,2,Dolor abdomi- nal,3,1,1,0,1,1,2,2,1,2,2,1,2,2,,Suboclu-Sión por bridas,1
+P.G.,2,66,2,Dolor abdomi-   nal+ constipa-ción,4,2,1,0,2,1,2,2,1,2,2,1,2,1,Constipa- ción,,6
+C.C.,1,48,1,Epigas-   tralgia,4,2,1,0,2,1,2,2,1,2,2,1,1,2,Epigastralgia,Dispepsia,3
+CH.E.,2,36,2,Epigas-  tralgia,4,2,1,0,2,2,2,2,1,2,2,1,2,2,,Gastropa   tía,3
+V.M.,2,60,1,Epigas-   tralgia,4,2,1,0,1,1,1,1,1,2,2,1,1,3,,,3
+L.Lo.,1,42,2,Epigas-   tralgia,3,2,2,1,1,2,2,2,1,2,2,1,2,1,Disten-   sion abdomi- nal,Meteorismo,3
+D.A.,1,70,1,Epigas- tralgia,4,1,1,0,2,2,2,2,1,2,2,1,1,3,Epigas- tralgia,Gastropa-tía,3
+O.Y.,1,44,1,Epigas- tralgia,3,1,1,0,1,2,2,1,2,1,2,2,2,1,,Constipa-  ción,3
+D.M.,1,53,1,Dolor abdomi-  nal,2,1,2,1,1,1,1,1,2,2,1,1,2,1,Dolor abdomi- nal,Colecis- titis aguda,3
+A.M.,1,73,1,Diarrea,4,2,1,0,2,2,2,1,1,2,2,1,2,1,Aumento diámetro abdomi- nal,Cirrosis hepatica,3
+C.C.,2,65,1,Proctorragia,3,1,1,0,2,2,2,2,1,2,2,1,2,1,Hemato quezia,,3
+CH.M.,2,56,1,Disfagia,4,2,1,0,2,1,2,2,1,2,2,1,2,1,Disfagia,Ca de esofago,3
+L.L.,1,48,1,Diarrea,2,1,1,0,1,2,2,1,1,2,2,1,2,1,Diarrea,Diarrea aguda,3
+P.O.,2,52,1,Epigas- tralgia,4,2,1,0,1,1,2,1,1,2,2,1,1,2,Pirosis,ERGE,3
+M.N.,2,46,1,Epigas- tralgia,3,2,1,0,2,2,2,2,1,2,2,1,1,2,,,5
+G.E.,1,75,2,Autorizar Hto,4,1,1,0,2,2,2,2,1,2,2,1,1,3,,,3
+A.D.,1,32,2,Epigas- tralgia,3,2,2,1,1,2,2,1,1,2,2,1,2,1,Dolor abdomi- nal,Dispepsia,3
+P.M.,1,53,1,Dolor abdomi- nal,4,2,1,0,1,1,2,2,1,2,2,2,2,1,Dolor abdomi- nal,,3
+M.E.,1,56,1,Epigas- tralgia,3,1,1,0,1,2,1,1,2,2,1,1,2,1,Epigas- tralgia,Epigas- tralgia,2
+O.E.,1,66,1,Epigas-tralgia+ vomitos,3,1,1,0,2,1,1,2,2,2,1,2,2,1,Vómitos+diarrea,,3
+M.N.,2,23,3,Fiebre,3,2,1,0,3,2,2,2,2,2,1,1,2,2,Fiebre,,6
+P.M.,1,58,2,Fiebre+ secreción purulenta por herida quirurgica,2,2,1,0,1,2,2,1,1,2,2,1,2,2,Secreción por herida quirurgica,Absceso postcole- cistecto- mia,2
+T.M.,1,75,1,Dolor abdomi- nal,4,1,1,0,2,2,2,2,1,2,2,1,2,1,,,5
+CH.K.,1,40,1,Disten- sion ab- dominal,3,2,1,0,1,2,2,1,2,2,1,1,2,1,Ascitis,SAE,3
+ D.H.,2,70,1,Dolor ab-dominal,4,2,1,0,2,1,2,2,1,2,2,1,2,1,Dolor ab- dominal,Dolor ab-dominal,3
+B.E.,2,28,2,Epigas- tralgia,2,2,1,,2,1,2,2,1,2,2,1,2,1,Epigas- tralgia ,Cólico biliar,2
+T.E.,1,25,2,Inflama-ción abdomi-nal,4,2,1,0,1,1,2,2,1,2,2,1,2,1,,,
+R.A.,1,62,1,Dolor abdo- minal,3,2,2,1,2,2,2,1,2,1,2,1,1,2,,,
+F.T.,2,39,1,Epigas- tralgia ,4,1,1,0,1,1,2,2,1,2,2,1,2,1,,,
+M.Y.,1,48,2,Disfagia,4,2,1,0,1,1,1,1,2,2,1,2,2,1,,,
+D.S.,1,44,2,Dolor abdomi-nal,3,1,1,0,2,1,2,1,1,2,2,1,2,1,,,
+P.M.,2,27,2,Dolor abdomi-nal,3,2,1,0,2,2,2,2,2,1,2,1,2,1,,,
+O.R.,2,47,2,Epigas-tralgia + proctorragia,3,2,1,1,1,1,1,2,2,2,1,1,2,1,,,
+G.J.,2,51,1,Dolor abdo-minal,4,2,2,1,2,2,2,2,1,2,2,2,2,1,,,
+L.A.,2,56,1,Calam-bres en miembros inferiores,4,1,2,1,1,2,2,2,1,2,2,1,1,2,,,
+S.R.,2,60,2,Dolor anal,4,1,2,1,1,2,2,1,2,2,1,1,1,2,,,
+A.M.,1,62,1,Dolor abdo- minal,3,1,2,1,1,1,2,2,1,2,2,1,2,1,,,
+E.R.,2,46,3,Dolor abdomi-nal + diarrea,3,1,2,0,1,2,2,2,2,1,2,1,2,2,,,
+T.L.,1,26,3,Diarrea,4,1,1,0,3,1,1,2,2,2,1,2,2,1,,,
+L.A.,2,62,2,Constipa-ción+ diarrea,4,2,1,0,2,2,2,2,1,2,2,1,2,1,,,
+V.A.,1,42,3,Dolor abdo-minal,3,1,2,1,1,2,2,1,2,1,2,1,2,1,,,
+M.B.,1,48,2,Dolor abdo- minal,4,2,1,0,1,1,2,2,1,2,2,1,2,1,,,
+B.N.,1,64,1,Dolor abdo-minal,4,2,1,0,1,1,2,2,1,2,2,1,2,1,,,
+A.Y.,1,24,2,Epigas-tralgia+ vómitos,4,2,1,0,3,1,2,2,1,2,2,1,2,1,,,
+A.B.,2,64,0,Diarrea+ vómitos+ fiebre,2,1,2,1,1,2,1,1,1,2,2,1,2,1,,,
+M.L.,2,48,2,Dolor abdo-minal+fiebre,3,2,1,0,1,1,2,2,1,2,2,1,1,2,,,
+P.M.,1,50,2,RGE+ náuseas,3,1,1,0,1,2,1,1,2,2,1,1,1,2,,,
+F.A.,2,56,2,Dolor abdomi- nal + vomitos,4,1,1,0,1,2,2,1,1,2,2,1,2,1,,,
+P.M.,1,43,1,Epigas- tralgia ,4,2,1,0,1,1,2,1,1,2,2,1,2,2,,,
+F.D.,2,62,2,Dolor abdomi- nal,2,2,1,0,2,2,2,1,2,1,2,1,2,1,,,
+A.E.,1,65,1,Dolor abdomi- nal,4,2,2,1,2,1,2,2,1,2,2,1,2,1,,,
+L.R.,2,25,1,Proctorragia,4,2,1,0,1,1,1,2,2,2,1,1,2,1,,,
+R.C.,1,55,1,Vómitos,2,2,1,0,1,2,2,1,1,2,2,1,1,3,,,
+J.S.,2,40,2,Dolor abdomi- nal + vómitos,2,1,2,1,2,2,2,2,1,2,2,1,2,1,,,
+L.J.,1,58,1,Dolor abdomi-nal,3,1,2,2,1,1,2,,1,2,2,1,2,1,,,
+L.D.,2,41,3,Constipa-ción,3,2,1,0,1,1,1,2,2,2,1,1,2,1,,,
+R.F.,2,16,2,Dolor abdomi-nal+ vomitos,3,2,2,1,1,1,1,2,2,2,1,1,2,1,,,
+V.R.,2,39,1,Dolor abdomi-nal,4,2,1,0,1,2,2,2,1,2,2,1,2,1,,,
+M.O.,2,38,1,Dolor abdomi-nal,4,2,1,0,1,1,1,1,2,2,1,1,2,1,,,
+F.J.,2,54,2,Acidez,4,2,1,0,1,2,2,1,1,2,2,1,1,2,,,
+M.E.,1,56,2,Dolor abdomi-nal,3,1,2,1,1,1,1,1,2,2,1,1,2,1,,,
+S.E.,2,26,2,Dolor abdomi-nal,3,1,2,1,1,1,1,1,2,2,1,1,2,1,,,
+R.J.,2,25,2,Epigas-tralgia,4,2,2,1,1,2,2,2,1,2,2,1,1,3,,,
+C.S.,1,45,2,Epigas-tralgia ,4,2,1,0,1,1,1,2,2,2,1,1,2,2,,,
+M.C.,1,71,1,Ascitis a tensión ,4,2,1,0,2,2,2,2,1,2,2,1,1,3,,,
+M.J.,2,37,1,Dolor abdomi-nal,3,2,1,0,2,1,1,1,1,2,2,1,2,1,,,
+R.E.,2,59,3,Deposi- ción oscura,4,2,1,0,2,1,1,2,2,2,1,1,1,0,,,
+G.G.,1,43,1,Dolor abdomi-nal+ fiebre,2,1,1,0,1,2,2,2,1,2,2,1,1,1,,,
+O.A.,2,47,1,Epigas-tralgia,4,2,2,1,1,1,1,2,2,2,1,2,2,2,,,
+F.O.,2,36,2,Vomitos,2,2,1,0,1,2,2,2,2,2,1,1,2,1,,,
+M.M.,2,35,1,Diarrea,4,2,1,0,1,1,1,2,2,2,1,1,2,1,,,
+A.Y.,1,60,1,Proctorragia,4,3,1,0,1,1,2,2,1,2,2,1,2,1,,,
+G.H.,2,45,1,Disfagia,4,3,1,0,2,1,2,2,1,2,2,1,2,1,,,
+M.M.,2,22,2,Cólicos intestina-les,3,2,1,0,1,2,2,2,2,1,2,2,2,1,,,
+V.J.,2,61,1,Dolor hipocon-drio derecho,4,2,1,0,1,1,1,2,1,2,2,2,2,1,,,
+G.T.,1,44,1,Dolor abdomi-nal,2,2,2,1,1,2,1,2,1,2,2,1,1,0,,,
+T.A.,2,51,2,Dolor abdomi-nal,3,2,1,0,1,2,1,2,1,2,2,1,2,1,,,
+C.G.,2,44,2,Vómitos,3,2,1,0,1,2,1,2,2,2,1,1,1,2,,,
+P.D.,2,66,1,Constipa-cion,4,2,1,0,2,1,2,2,1,2,2,1,2,1,,,
+M.A.,1,62,1,Constipa-cion,4,2,1,0,1,1,1,2,2,2,1,1,1,3,,,
+E.A.,2,68,1,Vómitos ,4,2,1,0,2,1,2,2,2,1,2,1,1,3,,,
+L.R.,1,29,2,Dolor abdomi- nal,3,2,2,1,1,2,1,2,1,2,2,1,2,1,,,
+A.F.,2,52,2,Dolor abdomi- nal,3,2,1,0,1,2,2,1,2,2,2,1,2,1,,,
+C.N.,1,46,2,Dolor abdomi-nal,3,2,2,1,2,1,2,2,1,2,2,1,1,2,,,
+Ll.A.,2,27,2,Diarrea+fiebre,3,2,1,0,1,1,1,2,2,2,1,2,1,2,,,
+A.F.,2,24,2,Dolor abdomi-nal+ fiebre,4,1,1,0,1,2,2,2,2,2,2,1,1,3,,,
+A.M.,1,31,2,Disten-sión abdomi- nal,4,2,1,0,1,1,2,1,1,2,2,1,2,1,,,
+J.B.,1,52,2,Vómitos+diarrea,3,2,1,0,1,1,1,2,2,2,1,1,2,1,,,
+B.G.,2,21,2,Epigas- tralgia,2,2,2,1,1,2,2,2,1,2,2,1,1,3,,,
+A.B.,2,25,2,Epigas-tralgia,4,2,2,1,1,1,2,2,1,2,2,1,2,1,,,
+L.M.,1,47,2,Coluria+ vómitos,4,2,1,0,2,1,2,2,1,2,2,2,1,3,,,
+S.A.,2,42,1,Dolor abdomi-nal,4,2,1,0,1,1,2,2,1,2,2,2,1,0,,,
+C.R.,2,44,1,Diarrea crónica,4,2,1,0,2,1,1,2,2,2,1,1,2,1,,,
+K.C.,1,63,2,Ascitis,4,1,1,0,2,1,1,2,2,2,1,2,1,3,,,
+V.M.,1,64,1,Epigas-tralgia,2,1,1,0,2,2,2,2,1,2,2,1,2,1,,,
+P.M.,1,69,1,Vómitos,3,2,1,0,2,1,2,2,1,2,2,1,2,1,,,
+P.P.,1,17,2,Gastritis,4,2,1,0,1,1,2,2,1,2,2,1,2,1,,,
+G.M.,1,43,1,Epigas- tralgia+ diarrea,4,2,1,0,1,1,1,2,2,2,1,1,1,3,,,
+F.D.,1,18,2,Dolor abdomi-nal,2,2,1,0,1,1,1,2,2,2,1,1,2,1,,,
+H.G.,1,34,1,Epigas- tralgia,4,2,1,0,1,2,2,2,1,2,2,1,1,3,,,
+H.B.,2,52,1,resultado biopsia gastrica. Control,4,3,1,0,1,1,1,2,1,2,2,1,1,3,,,
+B.V.,1,41,1,espasmo al comer.,4,2,2,1,1,1,2,2,1,2,2,1,1,2,,,
+S.H.,1,38,2,vomitos,4,2,1,0,2,1,2,2,2,1,2,1,1,2,,,
+J.C.,1,80,0,epigastralgia,4,1,1,0,1,1,1,2,1,2,2,1,1,2,,,
+A.D.,1,22,2,diarrea,4,1,1,0,2,1,2,2,1,2,2,1,2,1,,,
+A.M.,1,41,3,constipacion,4,2,1,0,2,1,2,2,1,2,2,2,1,2,,,
+D.C.,2,48,2,epigastralgia,3,2,1,0,1,2,2,2,1,2,2,1,2,1,,,
+D.G.,1,46,2,"hemorroides, dolor",4,1,1,0,1,2,2,1,1,2,2,1,1,3,,,
+M.M.,2,19,2,epigastralgia,4,2,1,0,1,1,1,2,2,2,1,1,2,1,,,
+S.N.,1,61,1,vomitos,4,2,1,0,1,2,2,2,1,2,2,1,2,1,,,
+R.M.,2,59,2,constipacion,4,1,1,0,1,2,2,2,1,2,2,1,2,1,,,
+O.F.,2,32,1,diarrea,4,2,1,0,1,1,1,2,2,2,1,1,2,1,,,
+I.M.,1,30,2,Flatulencia,3,1,2,1,1,1,2,2,1,2,2,1,2,1,,,
+M.A.,2,44,2,epig.diarrea,4,2,1,0,1,1,1,2,2,2,1,1,2,1,,,
+S.S.,1,49,2,epigastralgia,3,2,1,0,1,1,2,2,1,2,2,1,2,1,,,
+N.D.,1,65,3,epigastralgia,4,2,1,0,2,1,1,2,1,2,2,1,2,1,,,
+M.F.,1,20,2,proctorragia,4,2,1,0,1,2,2,2,1,2,2,2,1,3,,,
+L.L.,1,77,1,vomitos diarrea,4,2,1,0,1,1,2,2,2,1,2,1,1,2,,,
+S.A.,1,38,1,proctorragia,1,1,1,0,1,2,1,2,2,2,2,1,2,1,,,
+M.E.P.,1,64,2,colitis ulcerosa,4,2,1,0,,1,1,2,2,2,1,1,2,1,,,
+M.P.,1,27,1,epigastralgia,4,2,1,0,1,1,2,2,1,2,2,1,2,1,,,
+J.S.,2,54,1,epigastralgia,4,2,1,0,1,1,1,2,2,2,1,1,2,1,,,
+O.C.,1,65,1,vomitos epigastralgia,2,1,1,0,2,2,2,2,1,2,2,1,2,1,,,
+C.M.,1,25,2,colitis ulcerosa,4,2,1,0,1,2,1,2,2,2,1,1,2,1,,,
+A.B.,1,65,1,Diarrea ,4,2,1,1,2,1,1,2,1,2,2,1,2,1,,,
+EMC,1,42,1,dolor abdominal,4,1,1,1,2,1,1,2,2,2,1,2,2,1,,,
+L.C.,1,30,1,vomitos d ,2,1,1,1,1,2,2,1,1,2,2,1,2,1,,,
+S.I.,1,53,3,diarrea,4,2,1,1,2,1,1,1,2,2,1,1,2,1,,,
+M.F.,1,62,0,dolor abd,3,2,1,1,1,1,1,2,2,2,1,1,1,3,,,
+L.L,2,29,2,dolor abd,2,2,1,1,1,2,2,2,2,2,1,1,2,1,,,
+L.A.L,2,29,2,dolor abd,3,2,2,1,1,2,2,2,1,2,2,1,2,1,,,
+J.K.,2,44,2,Vomitos,3,2,1,1,1,1,1,2,1,2,2,1,2,1,,,
+A.R.,2,33,1,Dolor abd,2,2,1,1,1,2,2,2,1,2,2,1,2,3,,,
+O.Q.,2,37,1,Fluxion He,4,2,2,1,1,1,1,2,2,2,1,1,1,2,,,
+J.B.,2,62,1,dolor abd,3,1,1,1,1,1,1,2,2,2,1,1,2,1,,,
+F.G,1,81,0,Epigastr.,3,1,2,1,1,2,2,2,1,2,2,1,2,2,,,
+D.O.N.,2,43,1,dolor epigas,4,2,1,1,2,1,2,2,1,2,2,1,2,1,,,
+R.V.,2,61,2,diarrea,3,1,1,1,2,2,2,2,1,2,2,1,2,1,,,
+A.V.,1,43,1,dolor abd,4,2,1,1,1,2,2,2,1,2,2,1,1,3,,,
+O.E.V,2,44,1,epigastral,4,2,1,1,1,1,2,2,1,2,2,1,2,1,,,
+A.L.,1,20,3,dolor abd,4,2,1,1,2,1,1,1,1,2,2,1,2,1,,,
+A.L.,1,41,1,dolor abd,3,2,1,1,2,1,2,2,1,2,2,1,1,2,,,
+B.R.,2,64,0,dolor abd,4,2,2,2,1,2,1,1,2,2,1,1,2,1,,,
+J.G.,2,27,3,epigastral,4,1,1,1,1,2,2,2,1,2,2,2,2,1,,,
+S.L.,1,61,0,epigastralgia,4,2,2,1,1,1,2,2,1,2,2,1,2,1,,,
+E.V.,1,20,2,epigastral,4,1,2,1,1,1,1,2,1,2,2,1,2,1,,,
+S.G.,1,52,1,proctorragia,4,1,1,1,1,2,2,2,1,2,2,1,1,3,,,
+A.R.A,1,69,1,dolor abd,4,2,2,1,2,2,2,2,2,2,1,1,2,1,,,
+R.L.,1,58,1,Ictericia,4,1,1,1,1,1,1,2,1,2,2,1,1,2,,,
+S.T.,2,73,1,epigastral,4,2,2,2,1,2,2,2,1,2,2,1,1,3,,,
+M.I.G,1,66,2,Cancer de recto,4,2,1,1,2,1,2,2,1,2,2,1,2,1,,,
+J.P.,2,65,1,SOI,4,2,1,1,1,1,2,2,1,2,2,1,1,2,,,
+R:C.,2,44,1,dolor abd,4,2,1,1,1,2,2,1,1,2,2,1,1,3,,,
+M.R.B.,1,56,2,Eructos,4,3,1,1,1,1,2,2,1,2,2,1,2,1,,,
+C.A.,2,82,1,Pirosis melena,2,2,1,1,2,1,2,2,1,2,2,1,2,1,,,
+J.C.D.,2,46,1,"hemorroides, dolor",3,2,1,1,1,2,2,2,1,2,2,1,2,1,,,
+S.A.G.,2,51,1,Acidez,4,2,1,1,1,1,1,1,2,2,1,1,2,1,,,
+M.D.S,2,52,1,dolor abd,4,1,1,1,1,2,2,2,1,2,2,1,2,3,,,
+S.S.,2,26,2,adiccion a drogas,4,1,1,1,1,2,1,2,2,2,1,1,2,1,,,
+S.G. ,1,48,3,diarrea,2,2,1,1,1,1,2,1,1,2,2,1,2,1,,,
+A.R.L.,2,62,3,constipacion,4,2,1,1,2,2,2,2,1,2,2,1,2,1,,,
+C.T.I.,1,54,1,vomitos,2,1,1,1,1,2,2,2,1,2,2,1,2,1,,,
+L.A.,2,49,2,dolor abd,4,2,2,1,1,2,2,2,1,2,2,1,1,2,,,
+V.R.B.,2,49,1,distension abd,4,2,1,1,1,2,2,2,1,2,2,1,1,3,,,
+S.C.,1,64,1,dolor abd,2,2,1,1,2,2,2,1,1,2,2,1,2,1,,,
+O.R.,1,46,1,dolor abd,4,2,1,1,2,1,2,2,1,2,2,1,2,1,,,
+M.A.,2,23,2,proctorragia,2,2,1,1,1,2,2,2,1,2,2,1,2,1,,,
+D.C.,1,24,2,dolor abd,3,1,1,1,1,1,2,2,1,2,2,1,2,1,,,
+C. M.,1,26,2,diarrea,4,2,1,1,1,2,2,2,1,2,2,1,2,3,,,
+R.M.S.,1,57,0,dolor abdominal,3,1,1,1,2,1,2,2,1,2,2,1,2,1,,,
+N.L.,1,57,2,diarrea cronica,4,2,1,1,1,2,1,2,2,2,1,1,1,3,,,
+A.M.M.,1,47,2,dolor abd,4,2,1,1,1,2,2,2,1,2,2,1,1,2,,,
+S.C.,2,35,2,epigastralgia,4,2,1,1,2,2,2,2,1,2,2,1,2,1,,,
+R.C.,2,65,3,Constipacion,4,1,1,1,1,2,2,2,1,2,2,1,2,1,,,
+R.A.T.,1,49,1,disfagia,3,2,1,1,2,1,1,2,1,2,2,1,1,3,,,
+L.M.,1,76,0,Vomitos,4,2,1,1,2,2,2,2,2,2,1,1,2,1,,,
+A.G.,1,43,1,epigastralgia,4,2,1,1,2,1,2,1,1,2,2,1,2,1,,,
+R.L.A.,1,43,0,Ictericia,4,3,1,1,1,1,2,2,1,2,2,1,2,1,,,
+C.A.L,2,61,1,cuerpo extraño,3,2,1,1,2,1,1,2,2,2,1,1,2,1,,,

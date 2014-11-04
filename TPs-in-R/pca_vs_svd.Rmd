@@ -1,0 +1,62 @@
+---
+title: "PCA vs SVD"
+author: "Alejandro Pulver"
+date: "04/20/2014"
+output: pdf_document
+---
+
+## Relación entre PCA y SVD
+
+```{r}
+library(pander)
+source("utils.R")
+
+load("gorriones.Rda")
+non_factors <- sapply(gorriones, function(x) { !is.factor(x) })
+gorriones.num <- gorriones[non_factors]
+```
+
+#### Los autovalores y autovectores de la matriz multiplicada por su transpuesta equivale a hacer SVD sobre los datos originales.
+
+```{r}
+mat <- data.matrix(gorriones.num)
+sqrt(eigen(mat %*% t(mat))$values)[1:5]
+svd(mat)$d
+```
+
+Observar que `princomp` devuelve la raíz cuadrada de los autovalores, así queda en desviación estándar y no en varianza.
+
+#### PCA con la matriz de covarianzas equivale a hacer SVD sobre los datos centrados (restando la media) y divididos por la raíz de n.
+
+```{r}
+delta_mat <- scale(mat, scale=FALSE) / sqrt(dim(mat)[1])
+res_pca <- princomp(gorriones.num, cor = FALSE)
+
+sqrt(eigen(delta_mat %*% t(delta_mat))$values)[1:5]
+svd(delta_mat)$d
+res_pca$sdev
+```
+
+#### PCA con la matriz de correlaciones equivale a hacer SVD sobre los datos estandarizados (restando la media, dividiendo por la raíz de n-1 y por la varianza).
+
+```{r}
+delta_mat <- scale(mat) / sqrt(dim(mat)[1] - 1)
+res_pca <- princomp(gorriones.num, cor = TRUE)
+res_svd <- svd(delta_mat)
+
+sqrt(eigen(delta_mat %*% t(delta_mat))$values)[1:5]
+svd(delta_mat)$d
+res_pca$sdev
+```
+
+#### Los autovalores (y su raíz) indican la contribución de cada componente en la reconstrucción de la matriz original, y hay que hacer una cuenta para obtener la varianza explicada.
+
+```{r}
+my.explvar
+```
+
+#### Los autovectores obtenidos pueden no coincidir, pero seran solamente distintos en signos
+
+```{r, results='asis'}
+pander(matrix(res_pca$loadings, ncol=5) / -res_svd$v)
+```

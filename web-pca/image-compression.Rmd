@@ -1,0 +1,111 @@
+---
+title: "Image compression"
+output: html_document
+runtime: shiny
+---
+
+```{r, echo=FALSE, message=FALSE}
+library(gridExtra)
+library(colorspace)
+library(irlba)
+library(ggplot2)
+library(matrixcalc)
+library(rARPACK)
+library(plyr)
+source("utils.R")
+```
+
+This document helps understanding image compression through eigenvector and eigenvalue decomposition.
+
+```{r, echo=FALSE}
+maxComps <- 200
+
+selectInput("imageFile", "Select image", dir("images"))
+selectInput("colorspace", "Select color space", list("Grey", "sRGB", "HSV", "LAB", "LUV", "polarLAB", "polarLUV"))
+
+image <- reactive({
+  imageFromFile(paste("images", "/", input$imageFile, sep = ""))
+})
+
+decomposedImage <- reactive({
+  img <- imageConvCS(image(), colorSpaces[[input$colorspace]])
+  llply(imageToChannels(img), function(ch) {
+    convCh <- channelConvCS(ch, channelSpaces$sRGB)
+    convCh$data <- svds(convCh$data, maxComps)
+    convCh
+  })
+})
+
+reconstructedImage <- reactive({
+  channels <- llply(decomposedImage(), function(ch) {
+    numComponents <- input[[paste("components.", ch$name, sep='')]]
+    img.svd <- ch$data
+    
+    img.rec <- img.svd$u[,1:numComponents] %*% diag(img.svd$d[1:numComponents]) %*% t(img.svd$v[,1:numComponents])
+    img.rec[img.rec < 0] <- 0
+    img.rec[img.rec > 1] <- 1
+    
+    ch$data <- img.rec
+    ch
+  })
+  imageFromChannels(channels, colorSpaces[[input$colorspace]])
+})
+```
+
+```{r, echo=FALSE}
+renderPlot({
+  grid.raster(imageConvCS(image(), colorSpaces$sRGB)$data)
+})
+renderPlot({
+  img <- imageConvCS(reconstructedImage(), colorSpaces$sRGB)$data
+  img[img < 0] <- 0
+  img[img > 1] <- 1
+  grid.raster(img)
+})
+```
+
+```{r, echo=FALSE}
+channelPanel <- function() {
+  
+}
+
+renderUI({
+  colSp <- colorSpaces[[input$colorspace]]
+  llply(names(colSp$channels), function(ch) {
+    sliderInput(sprintf("components.%s", ch), sprintf("Number of components for %s", ch), min = 2, max = maxComps, value = 20)
+  })
+})
+```
+
+```{r, echo=FALSE, eval=FALSE}
+sliderInput("components", "Number of components", min = 2, max = maxComps, value = 20)
+
+renderPlot({
+  img <- imgInput()
+  img.svd <- imgSVDResult()
+  img.rec <- img.svd$u[,1:input$components] %*% diag(img.svd$d[1:input$components]) %*% t(img.svd$v[,1:input$components])
+  img.rec[img.rec < 0] <- 0
+  img.rec[img.rec > 1] <- 1
+  
+  #img.diff <- (img - img.rec + 1) / 2
+  img.diff <- 1 - abs(img - img.rec)
+  #img.diff <- abs(img - img.rec)
+  grid.arrange(rasterGrob(img.rec), rasterGrob(img.diff), nrow=1)
+})
+```
+
+```{r, echo=FALSE, eval=FALSE}
+renderPlot({
+  img <- imgInput()
+  img.svd <- imgSVDResult()
+  tmp <- img.svd$d[1:maxComps]
+  p1 <- qplot(1:length(tmp), tmp) + geom_vline(xintercept = input$components, color="red")
+  
+  blah <- img.svd$d^2 / matrix.trace(img %*% t(img))
+  tmp2 <- cumsum(sqrt(blah) / sum(sqrt(blah)))
+  p2 <- qplot(1:length(tmp2[1:maxComps]), tmp2[1:maxComps]) + geom_vline(xintercept = input$components, color="red")
+  print(grid.arrange(p1, p2, nrow=1))
+  
+  #plot(img.svd$d)
+})
+```

@@ -1,0 +1,137 @@
+---
+title: "Gorriones PCA"
+author: "Alejandro Pulver"
+date: "04/19/2014"
+output: html_document
+---
+
+```{r}
+library(pander)
+source("utils.R")
+library(ggplot2)
+library(gridExtra)
+library(lattice)
+library(ggbiplot)
+```
+
+## Ejercicios
+
+La tabla `gorriones.xls` contiene datos de 49 aves, 21 de los cuales sobrevivieron a una tormenta (se indican con un 1). Le solicitamos:
+
+```{r}
+load("gorriones.Rda")
+```
+
+#### Halle la matriz de covarianza para las variables estandarizadas.
+
+```{r}
+non_factors <- sapply(gorriones, function(x) { !is.factor(x) })
+gorriones.num <- gorriones[non_factors]
+gorriones.num.std <- scale(gorriones.num)
+gorriones.num.std.cov <- cov(gorriones.num.std)
+```
+
+#### Compruebe que ésta es la matriz de correlación.
+
+```{r}
+my.compare <- function(df1, df2) {
+  m1 <- data.matrix(df1)
+  m2 <- data.matrix(df2)
+  norm(m1 - m2)
+}
+
+gorriones.num.cor <- cor(gorriones.num)
+my.compare(gorriones.num.std.cov, gorriones.num.cor)
+```
+
+#### Calcule las componentes principales. ¿Se cumplen las hipótesis necesarias para aplicar el método? 
+
+Las variables son todas numéricas continuas, así que se puede.
+
+```{r}
+gorriones.num.pca <- princomp(data.matrix(gorriones.num), cor = TRUE)
+summary(gorriones.num.pca)
+tmp <- data.frame(index=1:length(gorriones.num.pca$sdev), varexpl=my.explvar(gorriones.num.pca$sdev))
+ggplot(tmp, aes(y=varexpl, x=index)) + geom_point() + geom_line()
+#plot(gorriones.num.pca, type="lines")
+#biplot(gorriones.num.pca)
+ggbiplot(gorriones.num.pca)
+```
+
+#### ¿Qué indica el autovalor para una componente principal? 
+
+```{r}
+gorriones.num.pca$sdev
+```
+
+Indica la importancia de cada componente para la reconstrucción de la matriz original. Y está relacionado con la varianza explicada por cada una:
+
+```{r}
+my.explvar(gorriones.num.pca$sdev)
+```
+
+#### ¿Cuántas componentes se requieren para explicar el 80% de la varianza total?
+
+```{r, results='asis'}
+tmp <- my.explvar(gorriones.num.pca$sdev)
+pander(data.frame(varexpl=tmp, cumval=cumsum(tmp)))
+```
+
+#### ¿Cómo queda expresada la primer componente principal? (en función del autovector correspondiente y de las variables).  
+
+```{r}
+tmp <- sweep(sweep(data.matrix(gorriones.num),MARGIN=2,gorriones.num.pca$center,FUN="-"),MARGIN=2,gorriones.num.pca$scale,FUN="/") %*% matrix(gorriones.num.pca$loadings, ncol=5)[,1]
+my.compare(tmp, gorriones.num.pca$scores[,1])
+```
+
+#### ¿Cuál es el valor de lambda 3? ¿Qué proporción de la varianza total explica este autovalor?
+
+```{r}
+gorriones.num.pca$sdev[3]
+my.explvar(gorriones.num.pca$sdev)[3]
+```
+
+#### Calcule el tercer autovector.
+
+```{r}
+as.vector(gorriones.num.pca$loadings[,3])
+```
+
+#### Encuentre las coordenadas del pájaro 11 en las nuevas componentes.
+
+```{r}
+tmp <- t(matrix(gorriones.num.pca$loadings, ncol=5)) %*% as.numeric((gorriones.num[11,] - gorriones.num.pca$center) / gorriones.num.pca$scale)
+tmp
+my.compare(tmp, gorriones.num.pca$scores[11,])
+```
+
+#### Exprese los datos en términos de las nuevas componentes.
+
+Como el caso anterior, pero utilizando todas las filas de los datos originales.
+
+#### Represente gráficamente en el plano. (Eje 1 vs 2, 1 vs 3, 2 vs 3).
+
+```{r}
+tmp <- as.data.frame(gorriones.num.pca$scores)
+one <- ggplot(tmp, aes(x=Comp.1, y=Comp.2)) + geom_point()
+two <- ggplot(tmp, aes(x=Comp.2, y=Comp.3)) + geom_point()
+three <- ggplot(tmp, aes(x=Comp.1, y=Comp.3)) + geom_point()
+grid.arrange(one, two, three, ncol=2)
+```
+
+#### Interprete los tres primeros ejes.
+
+```{r}
+tmp2 <- my.loadings2mat(gorriones.num.pca$loadings)
+levelplot(t(tmp2))
+```
+
+#### Realice un gráfico donde se observen los gorriones en los nuevos ejes 1 y 2, y resalte con distinto color el grupo de los que sobrevivieron.
+
+```{r}
+ggplot(tmp, aes(x=Comp.1, y=Comp.2, color=gorriones$Sobrevida)) + geom_point()
+```
+
+#### Utilice el Análisis en Componentes Principales como método para encontrar outliers.
+
+Arriba se observa uno muy marcado, dos a izquierda y tres a derecha.

@@ -1,0 +1,166 @@
+---
+title: 'TP 3: Contingency Analysis'
+author: "Alejandro Pulver"
+date: "23/04/2014"
+output: html_document
+---
+
+```{r}
+library(ca)
+library(plyr)
+library(pander)
+library(reshape2)
+library(ggplot2)
+library(pheatmap)
+source("utils.R")
+
+ejercicio_3_1 <- read.csv('../tp3//tabla_3-1.csv')
+```
+
+## Introducción
+
+Hay dos maneras de representar las tablas de contingencias en R. Una es como una matriz de números (con los nombres de fila y columna acorde a las modalidades de las dos variables elegidas), y la otra es una tabla con una frecuencia por fila (aquí cada modalidad va en una columna, pudiendo ser más de dos).
+
+La más natural para dos variables es la matriz, pero pierde información ya que las modalidades no forman parte de los datos. Por eso las guardaremos como tablas, y las convertiremos para verlas mejor cuando sea necesario.
+
+### Matriz
+
+```{r, results='asis'}
+ejercicio_3_1.mat <- my.contingency_matrix(ejercicio_3_1)
+pander(ejercicio_3_1.mat)
+my.contingency_heatmap(ejercicio_3_1)
+```
+
+### Tabla
+
+```{r, results='asis'}
+pander(ejercicio_3_1)
+```
+
+## Ejercicio 1
+
+Se clasificó en forma cruzada una muestra de 250 técnicos en telecomunicaciones  en base a su especialidad y a la zona de la comunidad en que estaban trabajando. Los resultados fueron los siguientes:
+
+```{r, results='asis'}
+ejercicio_3_1 <- read.csv('../tp3//tabla_3-1.csv')
+ejercicio_3_1.mat <- my.contingency_matrix(ejercicio_3_1)
+pander(ejercicio_3_1.mat)
+```
+
+#### Obtenga una tabla con las frecuencias relativas y compare todas las celdas entre sí. ¿Cuál es la zona – especialidad con mayor porcentaje de médicos? ¿Cuál es la que tiene menos?
+
+```{r, results='asis'}
+ejercicio_3_1.frec <- within(ejercicio_3_1, value <- value/sum(value))
+ejercicio_3_1.frec.mat <- my.contingency_matrix(ejercicio_3_1.frec)
+pander(ejercicio_3_1.frec.mat)
+```
+
+#### Calcule los porcentajes fila y compare las distintas zonas. ¿Hay especialidades que predominen en alguna zona?
+
+```{r, results='asis'}
+total.row <- daply(ejercicio_3_1, 1, function(df) sum(df$value))
+temp <- within(ejercicio_3_1, value <- value/total.row)
+temp.mat <- my.contingency_matrix(temp)
+pander(temp.mat)
+```
+
+#### Calcule los porcentajes columna y compare las distintas especialidades entre sí. 
+
+```{r, results='asis'}
+total.col <- daply(ejercicio_3_1, 2, function(df) sum(df$value))
+temp <- within(ejercicio_3_1, value <- value/total.col)
+temp.mat <- my.contingency_matrix(temp)
+pander(temp.mat)
+```
+
+#### Calcule las tablas de valores esperados y contribuciones al chi- cuadrado.
+
+```{r, results='asis'}
+total.sum <- sum(ejercicio_3_1$value)
+expected <- (total.row %o% total.col) / total.sum
+chisqr <- (ejercicio_3_1.mat - expected)^2 / expected
+pander(expected)
+pander(chisqr / sum(chisqr))
+sum(chisqr)
+sum(chisqr) / total.sum
+```
+
+#### ¿Proporcionan estos datos la evidencia suficiente que indique una falta de independencia entre los dos criterios de clasificación? Considerar un nivel de significación del 1 %.
+
+```{r}
+xpoints <- seq(from = 0, to = 1, length = 200)
+qplot(xpoints, qchisq(xpoints, 9)) + geom_hline(yintercept = qchisq(0.99, 9), color = "blue") + geom_hline(yintercept = 27.27, color = "red")
+```
+
+## Ejercicio 2
+
+A un grupo de 350 adultos, quienes participaron en una encuesta, se les preguntó si accedían o no a Internet.
+
+```{r, results='asis'}
+ejercicio_3_2 <- read.csv('../tp3//tabla_3-2.csv')
+ejercicio_3_2.mat <- my.contingency_matrix(ejercicio_3_2)
+pander(ejercicio_3_2.mat)
+```
+
+#### ¿Sugieren estos datos que existe diferencia de proporciones entre mujeres y hombres que acceden o no a Internet? Considerar a = 0,05.
+
+```{r}
+ejercicio_3_2.analysis <- my.contingency_analysis(ejercicio_3_2)
+pchisq(ejercicio_3_2.analysis$chisqr, 1)
+```
+
+No sugieren que haya diferencia.
+
+## Ejercicio 4
+
+La siguiente tabla contiene los datos del parte del personal de una empresa dividido en 5 categorías. A cada una de estas personas se le preguntó sobre la cantidad de cigarrillos que fuma, dividiéndolos en 4 categorías.
+
+```{r, results='asis'}
+ejercicio_3_4 <- read.csv('../tp3//tabla_3-4.csv')
+ejercicio_3_4.mat <- my.contingency_matrix(ejercicio_3_4)
+pander(ejercicio_3_4.mat)
+```
+
+#### ¿Son variables independientes?
+
+```{r}
+ejercicio_3_4.analysis <- my.contingency_analysis(ejercicio_3_4)
+pchisq(ejercicio_3_4.analysis$chisqr, ejercicio_3_4.analysis$chisqrDf)
+```
+
+No hay evidencia de dependencias.
+
+#### Realice un análisis de correspondencias para estos datos. ¿Cuántos factores retiene?
+
+```{r}
+res <- ca(ejercicio_3_4.analysis$matrix)
+res
+```
+
+#### Realizar los gráficos de una dimensión que correspondan a cada una de las variables involucradas.
+
+...
+
+#### Explique la calidad de la representación y las relaciones entre las variables y los ejes. (inercia, calidad, cosenos).
+
+...
+
+#### Realizar los gráficos de dos dimensiones que le resulten informativos. Hacer una síntesis de sus conclusiones, inspeccione relaciones entre perfiles fila, entre perfiles columna, asociaciones entre filas y columnas de manera adecuada.
+
+...
+
+#### Obtenga la cantidad de ejes que debe conservar para alcanzar un 80% de inercia.
+
+Con el primer eje alcanza.
+
+#### Obtenga los cosenos cuadrados de todas las modalidades (filas y columnas). Analice e interprete los ejes seleccionados en f.
+
+...
+
+#### Determine el nombre que debería ser seleccionado. Redacte un breve informe de las razones de su elección.
+
+```{r}
+plot(res)
+```
+
+...

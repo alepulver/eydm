@@ -1,0 +1,73 @@
+---
+title: "Resultados de Encuesta"
+author: "Alejandro Pulver"
+date: "07/12/2014"
+output: html_document
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis')
+```
+
+```{r}
+source("common.R")
+```
+
+# Modelos
+
+## Resumen de todas las variables
+
+Aquí tenemos una representación compacta del análisis exploratorio.
+
+```{r, fig.width=8, fig.height=16, echo=FALSE, cache=TRUE}
+my.multiplot(encuesta, function(df,var) {
+  ggplot(df, aes_string(x=var, fill="urgencia")) + geom_bar() + theme(axis.text.x = element_text(angle = 90), axis.title.x = element_text(hjust = 0)) + labs(fill="Urgencia", x=gsub("_", " ", var))
+},
+  rejectFunc = function(df,var) { var %in% categorias_excluidas }
+)
+```
+
+## Análisis de contingencias
+
+Vamos a realizar un análisis de contingencias con las variables categóricas presentes.
+
+```{r, fig.width=15, fig.height=10, cache=TRUE}
+df = encuesta[seleccion_contingencias]
+df = df[complete.cases(df),]
+#cats = sapply(names(df), function(x) nlevels(df[[x]]))
+cats = apply(df, 2, function(x) nlevels(as.factor(x)))
+mca1 = MCA(df, graph = FALSE)
+
+# data frames for ggplot
+mca1_vars_df = data.frame(mca1$var$coord, Variable = rep(names(cats), cats))
+mca1_vars_labels = gsub(".*_", "", rownames(mca1_vars_df))
+mca1_obs_df = data.frame(mca1$ind$coord)
+
+rotations = c(-45, -20, 0, 35, 60, 90)
+
+# plot of variable categories
+p = ggplot(data = mca1_vars_df, aes(x = Dim.1, y = Dim.2,
+    label = gsub(".*_", "", mca1_vars_labels))) +
+  geom_hline(yintercept = 0, colour = "gray70") +
+  geom_vline(xintercept = 0, colour = "gray70") +
+  geom_text(aes(colour = Variable,
+    angle = sample(rotations, dim(mca1_vars_df)[1], replace = T)))
+
+# plot of variables and observations
+ggplot(data = mca1_obs_df, aes(x = Dim.1, y = Dim.2)) +
+  geom_hline(yintercept = 0, colour = "gray70") +
+  geom_vline(xintercept = 0, colour = "gray70") +
+  geom_point(aes(shape = df$urgencia), size = 3, alpha = 0.7) +
+  geom_text(data = mca1_vars_df, fontface="bold",
+    aes(angle = runif(dim(mca1_vars_df)[1], -30, 30),
+      x = Dim.1, y = Dim.2, label = mca1_vars_labels, colour = Variable)) + 
+  scale_colour_discrete(name = "Variable") #+
+  #geom_density2d(colour = "gray80")
+```
+
+## Relación entre modalidades
+
+clustering por dist de cosenos
+
+...

@@ -1,0 +1,113 @@
+RANK  COMPRESSOR                               SIZE        TIME C.  TIME D.  C.EFF.   D.EFF.   C/D EFF. OPTIONS                
+1     Nanozip v.0.09a[Sami Runsas,FIN]         1200445707  4349.52  3866.36  187202   171741   179471   a -r -cc -m512m        
+2     Nanozip v.0.09a[Sami Runsas,FIN]         1241227827  3281.01  769.69   154641   74279    114460   a -r -cO -m512m        
+3     ZCM v.0.91B[Nania Francesco,ITA]         1261100542  947.07   884.76   80750    78756    79753    a -r -s -m7            
+4     ZCM v.0.92 [Nania Francesco,ITA]         1261133065  996.11   917.92   82321    79819    81070    a -r -s -m7            
+5     ZCM v.0.90 [Nania F.A.,ITA]              1261908705  1007.88  998.06   82729    82414    82571    a -r -s -m7            
+6     Zpaq v.6.43 [Matt Mahoney,USA]           1267793753  5116.52  4839.35  214440   205571   210005   -method 6              
+7     ZPAQ v.6.51(x64)[Matt Mahoney,USA]       1272473425  5097.61  5295.95  214022   220369   217195   -method 5              
+8     ZCM v.0.91B[Nania Francesco,ITA]         1286583468  558.18   535.74   69325    68607    68966    a -r -s -m6 -t2        
+9     ZCM v.0.90 [Nania F.A.,ITA]              1288059795  597.11   606.80   70630    70940    70785    a -r -s -m6 -t2        
+10    ZCM v.0.91B[Nania Francesco,ITA]         1310561522  343.94   344.84   63429    63457    63443    a -r -s -m5 -t4        
+11    ZCM v.0.90 [Nania F.A.,ITA]              1313499911  369.49   356.38   64364    63944    64154    a -r -s -m5 -t4        
+12    Nanozip v.0.09a[Sami Runsas,FIN]         1317872543  679.82   188.38   74469    58743    66606    a -r -co -m512m        
+13    Packet v.1.1 [Nania Francesco,ITA]       1328565161  1141.97  120.48   89686    56998    73342    a -r -mx -h4 -b512     
+14    ARCv.0.666[Bulat Ziganshin,UZB]          1330646151  914.65   169.25   82495    58642    70568    a -r -mx -lc512m -mt8  
+15    ZCM v.0.91B[Nania Francesco,ITA]         1332255332  295.23   276.62   62738    62142    62440    a -r -s -m4 -t7        
+16    Zpaq v.6.43 [Matt Mahoney,USA]           1336673595  2435.00  1410.14  131387   98591    114989   -method 5              
+17    ZCM v.0.92 [Nania Francesco,ITA]         1338417892  299.15   286.38   63110    62701    62905    a -r -s -m4 -t7        
+18    ARCv.0.666[Bulat Ziganshin,UZB]          1339191728  877.15   136.81   81636    57946    69791    a -r -m9d -lc512m -mt8 
+19    ZPAQ v.6.51 [Matt Mahoney,USA]           1340198217  1541.68  1523.16  102942   102349   102645   -method 4              
+20    Packet v.1.1 [Nania Francesco,ITA]       1342145343  869.43   119.29   81508    57503    69505    a -r -m6 -h4 -b512     
+21    ARCv.0.666[Bulat Ziganshin,UZB]          1346361797  690.54   156.30   75952    58856    67404    a -r -m5 -mt8          
+22    Packet v.1.1 [Nania Francesco,ITA]       1348066094  723.47   123.33   77074    57869    67471    a -r -m4 -h4 -b512     
+23    RZM v.0.07h[TAR][C.Martelock,GER]        1353970930  2246.88  335.06   126059   64881    95470    c                      
+24    Packet v.1.1 [Nania Francesco,ITA]       1363833882  368.71   120.78   66352    58418    62385    a -r -m0 -h4 -b512     
+25    LZHAM v.1.7[TAR][R.Geldreich,Jr.,RUS]    1378824738  7080.62  35.66    281733   56294    169013   -m4 -d29 -x c          
+26    7ZIP v.9.20[Igor Pavlov,RUS]             1384047924  769.41   96.70    79983    58456    69219    a -mmt8 -m0=lzma2 -mx9 -
+27    CSC32v.3.2final[Fu Siyuan,CHI]           1384484923  598.20   129.57   74522    59526    67024    a -r -mh -d512         
+28    RARv.5.01[Alexander Roshal,RUS]          1393907215  317.36   27.80    65912    56646    61279    a -r -s -m5 -ma5 -md512m
+29    Nanozip v.0.09a[Sami Runsas,FIN]         1409793513  220.41   35.83    63445    57538    60491    a -r -cDP -m512m       
+30    RAR v.5.01[Alexander Roshal,RUS]         1410107710  187.81   25.91    62414    57233    59823    a -r -s -m2 -ma5 -md512m
+31    CSC32v.3.2final[Fu Siyuan,CHI]           1418194842  643.24   131.80   77311    60945    69128    a -r -mh -d64          
+32    FlashziP v.1.3.0[Nania F.A.,ITA]         1418598265  1014.49  208.54   89208    63417    76312    a -r -mx3 -k7 -s -b512 
+33    Zpaq v.6.43 [Matt Mahoney,USA]           1425610945  919.16   393.30   86438    69610    78024    -method 4              
+34    ARCv.0.666[Bulat Ziganshin,UZB]          1428999548  186.64   52.73    63132    58847    60989    a -r -m3 -lc512m -mt8  
+35    ZPAQ v.6.51(x64)[Matt Mahoney,USA]       1430725853  710.55   349.32   79967    68407    74187    -method 3 -threads 3   
+36    LZHAM v.1.7[TAR][R.Geldreich,Jr.,RUS]    1432509062  677.90   34.12    78993    58392    68692    -m1 -d29 -x c          
+37    LZTurbo v.1.1[TAR][Hamid Buzidi,GER]     1444021333  1055.13  39.67    91525    59030    75277    -49 -b29               
+38    CSC32v.3.2final[Fu Siyuan,CHI]           1448841794  285.08   133.18   67076    62215    64645    a -r -m1 -d64          
+39    FlashziP v.1.3.0[Nania F.A.,ITA]         1455764154  548.93   229.60   75796    65578    70687    a -r -m0 -k7 -s -b512  
+40    7ZIP v.9.20[Igor Pavlov,RUS]             1465680595  634.69   83.86    78937    61311    70124    a -mmt8 -m0=lzma2 -mx1 -
+41    LZA v.0.10 [Nania Francesco,ITA]         1466312953  1130.96  22.23    94843    59364    77103    a -r -s -mx5 -b6 -h7   
+42    Nanozip v.0.09a[Sami Runsas,FIN]         1475140809  166.87   21.61    64345    59697    62021    a -r -cdP -m512m       
+43    TOR v.0.6[TAR][Bula Ziganshin,UZB]       1477307485  1903.49  44.62    120004   60520    90262    -10 -b512mb -h1gb      
+44    TOR v.0.5a[Bulat Ziganshin,UZB]          1478521035  2233.37  45.21    130609   60588    95598    -11 -b512mb -h1gb      
+45    Rings v.2.0[Nania F.A.,ITA]              1489356715  777.59   497.39   84457    75491    79974    a -r -m4 -s            
+46    Rings v.2.0[Nania F.A.,ITA]              1495951860  818.57   570.24   86032    78086    82059    a -r -m7 -s            
+47    BALZ v.1.15[TAR][Ilia Muraviev,RUS]      1498560835  1310.63  302.94   101883   69637    85760    ex                     
+48    Zpaq v.6.43 [Matt Mahoney,USA]           1499276321  415.82   225.66   73277    67192    70234    -method 3              
+49    LZA v.0.10 [Nania Francesco,ITA]         1505604966  661.49   25.43    81392    61038    71215    a -r -s -m1 -b6 -h7    
+50    BALZ v.1.15[TAR][Ilia Muraviev,RUS]      1506720626  993.62   304.25   92065    70005    81035    e                      
+51    TOR v.0.5a[Bulat Ziganshin,UZB]          1511705004  280.44   47.49    69442    61988    65715    -6 -b512mb -h1gb       
+52    LZSR v.0.01[TAR][NANIA Francesco,ITA]    1534889920  468.00   214.96   76372    68274    72323    c                      
+53    CABARC v.5.23[Microsoft,USA]             1536502432  1674.33  91.70    115039   64394    89716    -r -m LZX:21 N         
+54    LZA v.0.01 [Nania Francesco,ITA]         1548486473  1062.80  16.77    95949    62476    79212    a -r -s -m5 -b6 -h7    
+55    CM5 v.0 [TAR][Nauful,USA]                1550818427  598.19   671.44   81175    83519    82347    c                      
+56    TOR v.0.5a[Bulat Ziganshin,UZB]          1564978290  146.75   29.37    67295    63539    65417    -4 -b512mb -h1gb       
+57    CM1 [TAR][Nauful,USA]                    1572238373  1356.86  890.16   106309   91375    98842    c                      
+58    LZA v.0.01 [Nania Francesco,ITA]         1573884386  449.53   17.91    77340    63528    70434    a -r -s -m1 -b6 -h7    
+59    LZHAM v.1.7[TAR][R.Geldreich,Jr.,RUS]    1582211977  360.38   32.11    74821    64316    69568    -m0 -x c               
+60    RARv.5.01[Alexander Roshal,RUS]          1590059437  79.82    31.12    66157    64598    65377    a -r -s -m1 -ma5 -md512m
+61    SR3 [TAR][Matt Mahoney+,USA]             1592630927  382.03   457.38   75930    78341    77135    c                      
+62    ZPAQ v.6.51 [Matt Mahoney,USA]           1607496863  559.61   59.33    82207    66198    74202    -method 2              
+63    LZTurbo v.1.1[TAR][Hamid Buzidi,GER]     1614431544  46.92    23.39    66079    65326    65702    -32 -b29               
+64    RH4 v.240414[Nauful,USA]                 1622547062  502.76   57.77    80990    66751    73870    c6                     
+65    Nanozip v.0.09a[Sami Runsas,FIN]         1624090822  52.82    50.47    66654    66579    66616    a -r -cF -m512m        
+66    Zpaq v.6.43 [Matt Mahoney,USA]           1637090032  218.95   56.92    72490    67305    69897    -method 2              
+67    THOR v.0.96[TAR][Oscar Garcia,ESP]       1641566688  128.40   58.11    69771    67522    68646    e4                     
+68    RH4 v.240414[Nauful,USA]                 1643203606  273.22   74.55    74471    68114    71292    c1                     
+69    Zling 20140430[TAR][Zhang Li,CHI]        1649253649  193.44   46.47    72160    67457    69808    e4                     
+70    Zling 20140430[TAR][Zhang Li,CHI]        1662184438  186.98   42.82    72471    67858    70164    e0                     
+71    SLUG v.1.27b[TAR][C.Martelock,GER]       1664366443  36.69    43.93    67749    67980    67864    c                      
+72    ZLING [TAR][Zhang Li,CHI]                1670493465  187.56   40.06    72822    68102    70462    e                      
+73    ZPAQ v.6.51 [Matt Mahoney,USA]           1674701528  141.88   86.60    71528    69759    70643    -method 1 -threads 4   
+74    Zpaq v.6.43 [Matt Mahoney,USA]           1675368716  83.19    64.09    69677    69066    69371    -method 1              
+75    THOR v.0.96[TAR][Oscar Garcia,ESP]       1685930108  131.80   36.49    71655    68605    70130    e5                     
+76    THORv.0.93a[TAR][Oscar Garcia,ESP]       1685931328  151.85   83.60    72296    70112    71204    exx                    
+77    LAZY v.1.0[TAR][Matt Mahoney,USA]        1695096691  369.41   70.39    79625    70056    74840    5                      
+78    Zhuff v.0.98[TAR][Yann Collet,FRA]       1696308980  30.69    9.50     68834    68156    68495    -c2s                   
+79    Zhuffv.0.8[TAR][Yann Collet,FRA]         1699664658  66.81    10.97    70125    68338    69231    -c2t8s                 
+80    Zhuff v.0.98[TAR][Yann Collet,FRA]       1703515264  21.61    9.61     68832    68448    68640    -c1s                   
+81    Zhuffv.0.8 [Yann Collet,FRA]             1705880578  243.29   124.94   76021    72233    74127    -c2t8s                 
+82    CABARC v.5.23[Microsoft,USA]             1705898147  508.89   34.02    84520    69325    76922    -r -m MSZIP N          
+83    Nanozip v.0.09a[Sami Runsas,FIN]         1714193433  73.57    46.99    70922    70071    70496    a -r -cf -m512m        
+84    LZTurbo v.1.1[TAR][Hamid Buzidi,GER]     1725183264  27.72    24.17    69894    69781    69837    -30 -b29               
+85    Zlitev.0[TAR][Zhang Li,CHI]              1729860941  115.99   40.45    72906    70489    71697    e                      
+86    ARCv.0.666[Bulat Ziganshin,UZB]          1746738872  23.17    33.88    70611    70954    70782    a -r -m1               
+87    CRUSH v.1.0[TAR][Ilia Muraviev,RUS]      1757227112  1653.10  50.72    123188   71912    97550    cx                     
+88    LAZY v.1.0[TAR][Matt Mahoney,USA]        1767602556  93.49    81.92    73696    73326    73511    1                      
+89    Zhuffv.0.8 [Yann Collet,FRA]             1770539793  170.70   127.42   76284    74899    75591    -c0t8s                 
+90    ULZv.0.02[TAR][Ilia Muraviev,RUS]        1783429663  285.95   64.16    80488    73390    76939    c6                     
+91    CRUSH v.1.0[TAR][Ilia Muraviev,RUS]      1818616367  204.30   64.21    79282    74799    77040    cf                     
+92    LZ4 v.1.4[TAR][Yann Collet,FRA]          1835756755  31.17    10.37    74428    73762    74095    -9                     
+93    LZTurbo v.1.1[TAR][Hamid Buzidi,GER]     1878186981  26.96    21.65    75990    75820    75905    -20 -b29               
+94    SLUG v.1.1b[TAR][C.Martelock,GER]        1883827270  39.40    46.96    76614    76856    76735    c                      
+95    XELOZ v.0 [TAR][Xezz,JAP]                1887056068  781.14   48.98    100479   77050    88764    c1024                  
+96    XELOZ v.0 [TAR][Xezz,JAP]                1890023810  491.32   49.41    91323    77182    84252    c                      
+97    STZv.0.83[TAR][Bruno Wyttenbach,FRA]     1906329146  84.85    17.13    78968    76801    77884    -c5                    
+98    ULZv.0.02[TAR][Ilia Muraviev,RUS]        1910616524  54.08    58.28    78155    78290    78222    c1                     
+99    STZv.0.83[TAR][Bruno Wyttenbach,FRA]     1938193104  18.63    19.83    78124    78162    78143    -c                     
+100   SHRINKER v.0.1[TAR][Fu Siyuan,CHI]       1938616965  23.20    11.93    78287    77926    78106    c                      
+101   LZSS v.0.02[TAR][Ilya Muravyov,RUS]      1943892847  1631.25  13.13    129956   78176    104066   cx                     
+102   LZF v.1.01[TAR][Ilya Muravyov,RUS]       1946748618  93.85    18.50    80873    78462    79667    cx                     
+103   LZTurbo v.1.1[TAR][Hamid Buzidi,GER]     1960380154  64.91    45.29    80492    79864    80178    -10 -b29               
+104   LZ4 v.1.4[TAR][Yann Collet,FRA]          1965468620  15.57    11.56    79117    78989    79053    -1                     
+105   THOR v.0.96[TAR][Oscar Garcia,ESP]       1980011730  17.97    40.54    79776    80498    80137    e1                     
+106   THORv.0.93a[TAR][Oscar Garcia,ESP]       1980851768  39.25    76.60    80490    81685    81087    ef                     
+107   LZF v.1.01[TAR][Ilya Muravyov,RUS]       1983899016  42.82    19.75    80726    79988    80357    c                      
+108   LZP2v.101009[TAR][Yann Collet,FRA]       2011953643  14.10    14.46    80929    80941    80935    -c                     
+109   LZSS v.0.02[TAR][Ilya Muravyov,RUS]      2041046651  59.41    17.30    83543    82195    82869    cf                     
+110   FastLZ v.0.1 [TAR][Ariya Hidayat,RI]     2047992097  23.84    22.76    82683    82648    82665    -2                     
+111   BriefLZ v.1.04[TAR][Joergen Ibsen,---]   2060289410  78.22    63.31    84915    84437    84676    c                      
+112   FastLZ v.0.1 [TAR][Ariya Hidayat,RI]     2070478378  33.98    21.64    83906    83512    83709    -1  

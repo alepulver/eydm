@@ -1,0 +1,52 @@
+---
+title: "Using Images"
+author: "Alejandro Pulver"
+date: "04/23/2014"
+output: html_document
+---
+
+```{r}
+source("utils.R")
+library(gridExtra)
+library(colorspace)
+```
+
+## Load and display images
+
+```{r}
+img <- my.readImage("../images//5oY2ydR.jpg")
+grid.raster(img)
+```
+
+```{r}
+img.r <- img[,,1]
+img.g <- img[,,2]
+img.b <- img[,,3]
+grid.arrange(rasterGrob(img.r), rasterGrob(img.g), rasterGrob(img.b), ncol=2)
+```
+
+```{r}
+img.rgb <- RGB(as.vector(img[,,1]), as.vector(img[,,2]), as.vector(img[,,3]))
+img.hsv <- as(img.rgb, "HSV")
+img.hsv.m <- coords(img.hsv)
+img.h <- array(img.hsv.m[,1] / 360, dim=dim(img.r))
+img.s <- array(img.hsv.m[,2], dim=dim(img.r))
+img.v <- array(img.hsv.m[,3], dim=dim(img.r))
+grid.arrange(rasterGrob(img.h), rasterGrob(img.s), rasterGrob(img.v), ncol=2)
+```
+
+```{r}
+img.pluv <- coords(as(img.rgb, "polarLUV"))
+img.pluv.l <- array((img.pluv[,1] / 100), dim=dim(img.r))
+img.pluv.c <- array(img.pluv[,2] / 100, dim=dim(img.r))
+img.pluv.h <- array(img.pluv[,3] / 360, dim=dim(img.r))
+grid.arrange(rasterGrob(img.pluv.l^2.2), rasterGrob(img.pluv.c), rasterGrob(img.pluv.h), ncol=2)
+```
+
+```{r}
+img.luv <- coords(as(img.rgb, "LUV"))
+img.luv.l <- array(img.luv[,1] / 100, dim=dim(img.r))
+img.luv.u <- array(0.5 + img.luv[,2] / 200, dim=dim(img.r))
+img.luv.v <- array(0.5 + img.luv[,3] / 200, dim=dim(img.r))
+grid.arrange(rasterGrob(img.luv.l), rasterGrob(img.luv.u), rasterGrob(img.luv.v), ncol=2)
+```

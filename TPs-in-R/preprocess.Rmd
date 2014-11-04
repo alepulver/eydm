@@ -1,0 +1,124 @@
+---
+title: "Preprocess data"
+author: "Alejandro Pulver"
+date: "04/12/2014"
+output: html_document
+---
+
+# Preprocesar los datos
+
+```{r message=FALSE}
+library(pander)
+#panderOptions("table.split.table" , Inf) # avoid to split the tables
+library(gdata)
+```
+
+## Gorriones
+
+Vamos a importar de Excel la tabla.
+
+```{r}
+gorriones = read.xls('../outliers/Gorriones.xls', fileEncoding='latin1')
+```
+
+### Tipos de variables
+
+Para empezar a limpiar los datos, hay que ver si se leyeron correctamente.
+
+```{r}
+str(gorriones)
+```
+
+Como se puede ver, la variable *sobrevida* fue reconocida como un entera en vez de una cualitativa. Esto dificultará su procesamiento y el entorno dará resultados erróneos, como hacer un promedio de los valores en las medidas resumen.
+
+```{r results='asis'}
+pander(summary(gorriones$Sobrevida.vivo..1..muerto...1))
+```
+
+El tipo adecuado en R se llama **factor**, y se convierte así:
+
+```{r}
+gorriones$Sobrevida.vivo..1..muerto...1 = factor(gorriones$Sobrevida.vivo..1..muerto...1)
+str(gorriones)
+```
+
+Ahora no aparece como entero sino factor, y se analiza correctamente:
+
+```{r}
+summary(gorriones$Sobrevida.vivo..1..muerto...1)
+```
+
+Haremos lo mismo con el número de pájaro.
+
+```{r}
+gorriones$Pájaro <- factor(gorriones$Pájaro)
+```
+
+Y otras variables no son discretas sino continuas.
+
+```{r}
+gorriones$Largo.total <- as.numeric(gorriones$Largo.total)
+gorriones$Extensión.alar <- as.numeric(gorriones$Extensión.alar)
+```
+
+### Nombres
+
+Los nombres con muchos puntos seguidos hacen que algunas cosas no funcionen.
+
+```{r}
+colnames(gorriones)[7] <- "Sobrevida"
+```
+
+### Guardar la tabla limpia
+
+Si bien en este caso fue sencillo, se puede guardar la tabla con información extra (como las variables *factor*).
+
+```{r}
+str(gorriones)
+save(gorriones, file="gorriones.Rda")
+```
+
+## Internet
+
+```{r}
+internet = read.xls('../outliers/Internet2013.xls', fileEncoding='latin1')
+str(internet)
+```
+
+Comprobamos que *sexo* y *sitio* son cualitativas.
+
+```{r}
+summary(internet$Sitio)
+table(internet$Sitio)
+```
+
+Y las convertimos a factor.
+
+```{r}
+internet$Sexo = factor(internet$Sexo)
+internet$Sitio = factor(internet$Sitio)
+save(internet, file="internet.Rda")
+```
+
+## Pizzas
+
+```{r}
+pizzas = read.xls('../tp0/PIZZAS.xls', fileEncoding='latin1')
+str(pizzas)
+```
+
+Las variables *PH*, *GRA* y *SOD* quedaron como factores (strings) porque los elementos faltantes aparecen como un punto en vez de estar en blanco.
+
+```{r}
+pizzas$PH = as.numeric(pizzas$PH)
+pizzas$GRA = as.numeric(pizzas$GRA)
+pizzas$SOD = as.numeric(pizzas$SOD)
+```
+
+Y las últimas columnas no parecen tener sentido.
+
+```{r}
+pizzas = pizzas[,-c(10:14)]
+str(pizzas)
+save(pizzas, file='pizzas.Rda')
+```

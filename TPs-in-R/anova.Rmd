@@ -1,0 +1,77 @@
+---
+title: "ANOVA"
+author: "Alejandro Pulver"
+date: "06/11/2014"
+output: html_document
+---
+
+```{r}
+library(reshape2)
+library(granovaGG)
+library(easyanova)
+```
+
+#### Ejercicio 13
+
+Veinte personas voluntarias se dividieron al azar en dos grupos. Las personas del grupo A se sometieron a un período de privación sensorial de 10 días, mientras que las del grupo B sirvieron de control. Al término del período experimental, se registró la frecuencia de la onda alfa componente de los electroencefalogramas de las personas.
+
+```{r}
+ejercicio_13 = data.frame(
+  grupo_a = c(10.2, 9.5, 10.1, 10.0, 9.8, 10.9, 11.4, 10.8, 9.7, 10.4),
+  grupo_b = c(11.0, 11.2, 10.1, 11.4, 11.7, 11.2, 10.8, 11.6, 10.9, 10.9))
+
+with(ejercicio_13, t.test(grupo_a, grupo_b, var.equal = TRUE))
+```
+
+#### Ejercicio 21
+
+Doce inspectores midieron el diámetro de un cojinete usando dos calibradores diferentes.
+
+```{r, message=FALSE}
+ejercicio_21 = data.frame(
+  cal_1 = c(0.265, 0.265, 0.266, 0.267, 0.267, 0.265, 0.267, 0.267, 0.265, 0.268, 0.268, 0.265),
+  cal_2 = c(0.264, 0.265, 0.264, 0.266, 0.267, 0.268, 0.264, 0.265, 0.265, 0.267, 0.268, 0.269))
+
+with(ejercicio_21, t.test(cal_1, cal_2, paired = TRUE))
+```
+
+#### Ejercicio 27
+
+Varios investigadores desean saber si pueden concluir que dos poblaciones de niños difieren en cuanto a la edad media a la cual pudieron caminar por sí solo.
+
+```{r, message=FALSE}
+ejercicio_27 = data.frame(
+  pob_a = c(9.5, 10.5, 9.0, 9.75, 10.0, 13.0, 10.0, 13.5, 10.0, 9.5, 10.0, 9.75),
+  pob_b = c(12.5, 9.5, 13.5, 13.75, 12.0, 13.75, 12.5, 9.5, 12.0, 13.5, 12.0, 12.0))
+
+with(ejercicio_27, t.test(pob_a, pob_b))
+fit <- aov(value ~ variable, data=melt(ejercicio_27))
+summary(fit)
+```
+
+#### Ejercicio 28
+
+Con el fin de comparar el nivel de ruido presente, se están estudiando cuatro circuitos digitales diferentes de computadora.
+
+```{r, message=FALSE}
+ejercicio_28 = data.frame(
+  c_1 = c(19, 20, 19, 30, 8),
+  c_2 = c(80, 61, 73, 56, 80),
+  c_3 = c(47, 26, 25, 35, 50),
+  c_4 = c(95, 46, 83, 78, 97))
+
+fit <- aov(value ~ variable, data = melt(ejercicio_28))
+summary(fit)
+```
+
+#### Paquete `easyanova`
+
+```{r}
+ea1(melt(ejercicio_28))
+```
+
+#### Gráfico de ANOVA
+
+```{r, fig.width=7, fig.height=7}
+granovagg.1w(ejercicio_28)
+```

@@ -1,0 +1,86 @@
+---
+title: "Resultados de Encusta"
+author: "Alejandro Pulver"
+date: "06/21/2014"
+output: html_document
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results='asis')
+```
+
+```{r}
+source("common.R")
+```
+
+# Introducción
+
+Se analizan los datos de 200 pacientes que  concurren al servicio de guardia del Hospital Udaondo. La encuesta contiene las respuestas a 23 preguntas.
+
+Se procesan los datos utilizando el software libre *R*.
+
+Vamos a ignorar las variables `motivo_de_consulta`, `motivo_de_consulta_medico`, `destino` y `diagnostico_de_egreso` por falta de datos.
+
+## Columnas adicionales
+
+### Urgencia
+
+La columna `urgencia` indica *Ilegítima* cuando los síntomas duraron 7 días o más, y *Legítima* en los demás casos. Ya que no se contaba con otra medida para decidir si el paciente fue a urgencia innecesariamente.
+
+Si la misma no es apropiada, los resultados tampoco lo serán.
+
+### Cómo llegó a este hospital?
+
+Las 3 variables `como_llego_a_este_hospital`, que son `recomendacion`, `medios_de_comunicacion` y `derivacion_medica`, son mutuamente excluyentes.
+
+Aún así hay 3 casos donde ninguna fue seleccionada. Agregamos una modalidad *Otros* para codificar las 3 variables en una sola columna.
+
+```{r}
+selection <- laply(1:dim(encuesta)[1], .fun = function(i) { table(t(encuesta[i, 14:16]))[["No"]] != 2 })
+pander(encuesta[selection,c(1:3)])
+```
+
+# Variables por separado
+
+## Edad
+
+```{r}
+legitimos <- (encuesta$urgencia == "Legítima")
+
+df <- encuesta[legitimos,]
+edad_range <- max(df$edad) - min(df$edad)
+p1 <- ggplot(df, aes(x=edad)) +
+  geom_histogram(binwidth=edad_range/6, colour="darkgreen", fill="green") +
+  labs(title = "Legítima", y = "Cantidad")
+
+df <- encuesta[!legitimos,]
+edad_range <- max(df$edad) - min(df$edad)
+p2 <- ggplot(df, aes(x=edad)) +
+  geom_histogram(binwidth=edad_range/6, colour="darkgreen", fill="green") +
+  labs(title = "Ilegítima", y = "Cantidad")
+
+grid.arrange(p1, p2, nrow=1)
+```
+
+## Urgencia
+
+```{r, fig.width=4, fig.height=5}
+ggplot(encuesta, aes(x=urgencia)) + geom_bar() + labs(y = "Cantidad")
+```
+
+```{r}
+pander(my.factor_table(encuesta$urgencia))
+```
+
+```{r, results='asis', fig.width=3, fig.height=6}
+df = encuesta
+out = NULL
+
+for (var in names(encuesta)[seleccion_categoricas]) {
+  # Generamos dinámicamente una sección por variable
+  out <- c(out, knit_child('template.Rmd', quiet=TRUE))
+}
+
+cat(paste(out, collapse = '\n'))
+```
