@@ -40,14 +40,28 @@ Another interesting option is to create interactive reports in the form of web p
 - Learn R's formula syntax as soon as possible: it's used for models, plots, etc.
 - Use `plyr` to summarize, split, process and combine data
 - Use `reshape2` to convert factor variables to columns or vice versa
-- Use `Matrix` to deal with matrices, which is faster than the built-in class
-- R's OOP system uses generic functions not part of any class that dispatch on their arguments, and classes are just records with data (immutable and with copy semantics).
-- For traditional (possibly mutable) OOP in R, check [Reference classes](http://adv-r.had.co.nz/OO-essentials.html).
-- For prototype based OOP check [proto](http://code.google.com/p/r-proto/wiki/Overview).
-- To use available parallelism, try `doMC` (for multicore) and `doMPI` (for many nodes, distributed). They have to be enabled with `registerDoMC(cores=8)`, and used with `%dopar%` or other functions (see `parallel`).
+- Use `pander` to render tables when using `rmarkdown`
+- Try `dplyr` or [data.table](http://blog.yhathq.com/posts/fast-summary-statistics-with-data-dot-table.html) as alternative data frame libraries
 - A good classification and regression wrapper/tool package that uses parallelization is [caret](http://topepo.github.io/caret/).
 
 # Recommended packages
+
+## Programming
+
+- testthat: testing framework
+- [megrittr](https://github.com/smbache/magrittr): functional pipe operator to avoid nesting calls
+
+### Paradigms
+- R's OOP system uses generic functions not part of any class that dispatch on their arguments, and classes are just records with data (immutable and with copy semantics).
+- For traditional (possibly mutable) OOP in R, check [Reference classes](http://adv-r.had.co.nz/OO-essentials.html).
+- For prototype based OOP check [proto](http://code.google.com/p/r-proto/wiki/Overview).
+
+### Optimization
+- To use available parallelism, try `doMC` (for multicore) and `doMPI` (for many nodes, distributed). They have to be enabled with `registerDoMC(cores=8)`, and used with `%dopar%` or other functions (see `parallel`).
+- [aprof](https://github.com/MarcoDVisser/aprof): Amdahl's profiler, directed optimization made easy
+- proftools: Profile Output Processing Tools for R
+- [profr](https://github.com/hadley/profr): An alternative display for profiling information
+- timeit: Easy profiling of R functions
 
 ## Graphics
 
@@ -58,17 +72,12 @@ Another interesting option is to create interactive reports in the form of web p
 - pheatmap: better heatmap for visualizing matrices, also with dendrogram
 - [ggtern](http://www.ggtern.com/): ternary diagrams for ggplot2
 - [tabplot](https://github.com/mtennekes/tabplot): a visualization of large datasets, numerical and categorical
-- heplots: Visualizing Hypothesis Tests in Multivariate Linear Models
-- [corrplot](http://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html): visualizing correlation matrices and confidence intervals
 
 ### Specific
-- vcd, vcdExtra: plots inspired from "Visualizing Categorical Data" book
-- extracat: Categorical Data Analysis and Visualization
-- ggparallel: Variations of Parallel Coordinate Plots for Categorical Data
-- klaR: Classification and visualization
 - [ggbiplot](https://github.com/vqv/ggbiplot): PCA biplot for ggplot2
 - NeatMap: Non-clustered heatmap alternatives
-- pca3d: show a rotatable 3D plot of the first 3 principal components
+- heplots: Visualizing Hypothesis Tests in Multivariate Linear Models
+- [corrplot](http://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html): visualizing correlation matrices and confidence intervals
 
 ### Utilities
 - gridExtra, gtable: arrange lattice/ggplot2 plots in a grid/table
@@ -76,12 +85,9 @@ Another interesting option is to create interactive reports in the form of web p
 - [ggsubplot](https://github.com/garrettgman/ggsubplot): explore complex data by embedding ggplot2 plots
 - readbitmap, pixmap: read image files (jpg, png, bmp, etc)
 - colorspace, munsell: better color systems for plot output (HUSL is missing)
+- abind: merging multidimensional arrays (such as image channels)
 
-### 3D plots
-- sphereplot
-- plot3D
-- plot3Drgl
-- scatterplot3d
+## Models
 
 ### Similarity
 
@@ -90,15 +96,6 @@ Another interesting option is to create interactive reports in the form of web p
 - [ggdendro](https://github.com/andrie/ggdendro): Tools to extract dendrogram plot data for use with ggplot
 - proxy: Distance and Similarity Measures
 - stringdist: Approximate string matching and string distance functions
-
-## Models
-
-### Interactive
-- [FactoMineR](http://factominer.free.fr/index.html): multivariate analysis with R commander GUI (includes `MCA`)
-- latticist
-- clusterfly: Explore clustering interactively using R and GGobi
-- meifly: Interactive model exploration using GGobi
-- ggvis: Interactive grammar of graphics
 
 ### MDS and SOM
 
@@ -110,51 +107,36 @@ This is similar to dimensionality reduction, but works with a distance matrix in
 - smacof: Multidimensional Scaling in R
 - MDSGUI: A GUI for interactive MDS in R
 
-### Clustering
-- flexclust: Flexible Cluster Algorithms
-- fpc: Flexible procedures for clustering
-- fastcluster: Fast hierarchical clustering routines for R and Python
-- ClustOfVar: Clustering of variables
-- fclust: Fuzzy clustering
-- blockcluster: Co-Clustering package for binary, contingency, continuous and categorical data-sets
-
 ### Categorical Data
 - ca: correspondence analysis
 - anacor: Simple and Canonical Correspondence Analysis
+- vcd, vcdExtra: plots inspired from *Visualizing Categorical Data* book
+- extracat: Categorical Data Analysis and Visualization
+- ggparallel: Variations of Parallel Coordinate Plots for Categorical Data
 
-### General
-- igraph: Network analysis and visualization
-- vscc: Variable selection for clustering and classification
-- e1701: includes an `svm` implementation
-- MASS: Functions and datasets for *Modern Applied Statistics with S* (includes an `lda` function)
-- DiscriMiner: Tools of the Trade for Discriminant Analysis
+### Misc
 
-## Tools
+- lda: Linear Discriminant Analysis, from `MASS`
+- svm: Support Vector Machines, from `e1701`
+- MCA: Multiple Correspondence Analysis, from [FactoMineR](http://factominer.free.fr/index.html), also includes an R commander GUI
+- klaR: Classification and visualization
 
-### General
-- pander: rendering tables and data frames in R Markdown
-- abind: merging multidimensional arrays (such as image channels)
-- testthat: testing framework
-- [data.table](http://blog.yhathq.com/posts/fast-summary-statistics-with-data-dot-table.html): fast summary statistics
-- playitbyr: representing and exploring data through sound
-- multitable, mefa4: handling multiple tables for the same variables
+# Resources
 
-### Profiling
-- [aprof](https://github.com/MarcoDVisser/aprof): Amdahl's profiler, directed optimization made easy
-- proftools: Profile Output Processing Tools for R
-- [profr](https://github.com/hadley/profr): An alternative display for profiling information
-- timeit: Easy profiling of R functions
-
-# Links
+## General
 
 - [Quick-R Guide](http://www.statmethods.net/), and the expanded book [R in Action (2011)](http://www.amazon.com/R-Action-Robert-Kabacoff/dp/1935182390)
 - Free book and presentation [Practical tools for exploring data and models](http://had.co.nz/thesis/), from the author of `ggplot2`
 - Book [Reproducible Research with R and RStudio (2013)](http://www.amazon.com/Reproducible-Research-RStudio-Chapman-Series/dp/1466572841), a bit outdated
 - Book [Advanced R Programming (2014)](http://adv-r.had.co.nz/), on-line draft
-- [10 R Packages](http://blog.yhathq.com/posts/10-R-packages-I-wish-I-knew-about-earlier.html)
+
+## Specific
+
+- [10 R Packages I wish I knew about earlier](http://blog.yhathq.com/posts/10-R-packages-I-wish-I-knew-about-earlier.html)
 - [Gaston Sanchez's R Packages](http://gastonsanchez.com/software/)
 - [Multiple Correspondence Analysis](http://rstudio-pubs-static.s3.amazonaws.com/2120_cfbb7161b23e494ea47707f5a12032f1.html)
 - [Computing and Visualizing LDA in R](http://tgmstat.wordpress.com/2014/01/15/computing-and-visualizing-lda-in-r/)
 - [Computing and Visualizing PCA in R](http://tgmstat.wordpress.com/2013/11/28/computing-and-visualizing-pca-in-r/)
 - [LDA example with clustering](http://web.bahcesehir.edu.tr/atabey_kaygun/other/lda.html)
 - [How to list all available generic R functions](http://stackoverflow.com/questions/15803154/see-which-s3-generic-methods-are-available-in-environment)
+- [5 Ways to do 2D histograms in R](http://www.r-bloggers.com/5-ways-to-do-2d-histograms-in-r/)
