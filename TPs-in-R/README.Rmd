@@ -34,15 +34,16 @@ Another interesting option is to create interactive reports in the form of web p
 
 # Tips
 
-- Use factors for qualitative (ordered or unordered) variables.
+- Use factors for qualitative (ordered or unordered) variables. The order is followed in plots.
 - Learn R's formula syntax as soon as possible: it's used for models, plots, etc.
 - Make sure your data is in the [appropriate format](http://vita.had.co.nz/papers/tidy-data.html) for these tools.
 - Don't use base graphics, go for [lattice](http://science.nature.nps.gov/im/datamgmt/statistics/r/graphics/lattice.cfm) or [ggplot2](http://www.r-bloggers.com/ggplot2-cheatsheet-for-visualizing-distributions/).
 - A better interface for transforming data is `plyr`, and for data frames [dplyr](https://github.com/hadley/dplyr).
 - There are better alternatives for `summary` in [additional packages](http://www.statmethods.net/stats/descriptives.html).
-- Use `reshape2` to convert factor variables to columns or vice versa
-- Use `pander` to render tables when using `rmarkdown`
-- A faster data frame implementation is [data.table](http://blog.yhathq.com/posts/fast-summary-statistics-with-data-dot-table.html), still compatible with `dplyr`
+- Use `reshape2` to convert factor variables to columns or vice versa. See this [tutorial](http://seananderson.ca/2013/10/19/reshape.html).
+- Use `pander` to render tables when using `rmarkdown`.
+- Use the pipe operators (`%.%` from `dplyr`, or `%>%` from [megrittr](https://github.com/smbache/magrittr)). See this [example](http://stackoverflow.com/questions/22314680/how-to-use-the-operator-in-r).
+- A faster data frame implementation is [data.table](http://blog.yhathq.com/posts/fast-summary-statistics-with-data-dot-table.html), still compatible with `dplyr`.
 - A good classification and regression wrapper/tool package that uses parallelization is [caret](http://topepo.github.io/caret/).
 
 # Recommended packages
@@ -50,7 +51,6 @@ Another interesting option is to create interactive reports in the form of web p
 ## Programming
 
 - testthat: testing framework
-- [megrittr](https://github.com/smbache/magrittr): functional pipe operator to avoid nesting calls
 
 ### Paradigms
 - R's OOP system uses generic functions not part of any class that dispatch on their arguments, and classes are just records with data (immutable and with copy semantics).
