@@ -37,7 +37,8 @@ Another interesting option is to create interactive reports in the form of web p
 - Use factors for qualitative (ordered or unordered) variables. The order is followed in plots.
 - Learn R's formula syntax as soon as possible: it's used for models, plots, etc.
 - Make sure your data is in the [appropriate format](http://vita.had.co.nz/papers/tidy-data.html) for these tools.
-- Don't use base graphics, go for [lattice](http://science.nature.nps.gov/im/datamgmt/statistics/r/graphics/lattice.cfm) or [ggplot2](http://www.r-bloggers.com/ggplot2-cheatsheet-for-visualizing-distributions/).
+- Extracting information from the output of R functions is hard because of the list format. To fix this, try [broom](https://github.com/dgrtwo/broom).
+- Don't use base graphics, go for [lattice](http://science.nature.nps.gov/im/datamgmt/statistics/r/graphics/lattice.cfm) or [ggplot](http://www.r-bloggers.com/ggplot2-cheatsheet-for-visualizing-distributions/).
 - A better interface for transforming data is `plyr`, and for data frames [dplyr](https://github.com/hadley/dplyr).
 - There are better alternatives for `summary` in [additional packages](http://www.statmethods.net/stats/descriptives.html).
 - Use `reshape2` to convert factor variables to columns or vice versa. See this [tutorial](http://seananderson.ca/2013/10/19/reshape.html).
@@ -67,7 +68,7 @@ Another interesting option is to create interactive reports in the form of web p
 ## Graphics
 
 ### Plots
-- GGally: additional graphics using ggplot2, like advanced scatter plot matrix
+- GGally: additional graphics using `ggplot`, like advanced scatter plot matrix
 - plotrix: many additional plots, like radial/spider
 - aplpack: special plots like stem.leaf, bagplot, faces, spin3R, plotsummary, plothulls
 - pheatmap: better heatmap for visualizing matrices, also with dendrogram
@@ -81,21 +82,23 @@ Another interesting option is to create interactive reports in the form of web p
 - [corrplot](http://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html): visualizing correlation matrices and confidence intervals
 
 ### Utilities
-- gridExtra, gtable: arrange lattice/ggplot2 plots in a grid/table
+- gridExtra, gtable: arrange `lattice` and `ggplot` plots in a table
 - [directlabels](http://directlabels.r-forge.r-project.org/): direct labels for multicolor plots in lattice or ggplot2
-- [ggsubplot](https://github.com/garrettgman/ggsubplot): explore complex data by embedding ggplot2 plots
-- readbitmap, pixmap: read image files (jpg, png, bmp, etc)
+- [ggsubplot](https://github.com/garrettgman/ggsubplot): explore complex data by embedding `ggplot` plots
+- readbitmap, pixmap: read different image files (jpg, png, bmp, etc) with the same function
 - colorspace, munsell: better color systems for plot output (HUSL is missing)
 - abind: merging multidimensional arrays (such as image channels)
 
 ## Models
 
+- Both `ggplot` and `lattice` support adding regression lines and intervals, but `visreg` provides generic functions to plot a fitted model.
+
 ### Similarity
 
 - [dendextend](https://github.com/talgalili/dendextend/): Extending R's dendrogram functionality
 - dendroextras: Extra functions to cut, label and colour dendrogram clusters
-- [ggdendro](https://github.com/andrie/ggdendro): Tools to extract dendrogram plot data for use with ggplot
-- proxy: Distance and Similarity Measures
+- [ggdendro](https://github.com/andrie/ggdendro): Tools to extract dendrogram plot data for use with `ggplot`
+- proxy: collection of Distance and Similarity Measures
 - stringdist: Approximate string matching and string distance functions
 
 ### MDS and SOM
@@ -109,8 +112,9 @@ This is similar to dimensionality reduction, but works with a distance matrix in
 - MDSGUI: A GUI for interactive MDS in R
 
 ### Categorical Data
-- ca: correspondence analysis
-- anacor: Simple and Canonical Correspondence Analysis
+
+- ca: Correspondence Analysis
+- anacor: Simple and Canonical Correspondence Analysis, supports missing values
 - vcd, vcdExtra: plots inspired from *Visualizing Categorical Data* book
 - extracat: Categorical Data Analysis and Visualization
 - ggparallel: Variations of Parallel Coordinate Plots for Categorical Data
@@ -121,6 +125,7 @@ This is similar to dimensionality reduction, but works with a distance matrix in
 - svm: Support Vector Machines, from `e1701`
 - MCA: Multiple Correspondence Analysis, from [FactoMineR](http://factominer.free.fr/index.html), also includes an R commander GUI
 - klaR: Classification and visualization
+- candisc: visualization of generalized discriminant and correlation analysis
 
 # Resources
 
