@@ -124,6 +124,7 @@ This is similar to dimensionality reduction, but works with a distance matrix in
 - lda: Linear Discriminant Analysis, from `MASS`
 - svm: Support Vector Machines, from `e1701`
 - MCA: Multiple Correspondence Analysis, from [FactoMineR](http://factominer.free.fr/index.html), also includes an R commander GUI
+- likelihood.test: G-test of independence, from `Deducer`
 - klaR: Classification and visualization
 - candisc: visualization of generalized discriminant and correlation analysis
 
@@ -146,3 +147,5 @@ This is similar to dimensionality reduction, but works with a distance matrix in
 - [LDA example with clustering](http://web.bahcesehir.edu.tr/atabey_kaygun/other/lda.html)
 - [How to list all available generic R functions](http://stackoverflow.com/questions/15803154/see-which-s3-generic-methods-are-available-in-environment)
 - [5 Ways to do 2D histograms in R](http://www.r-bloggers.com/5-ways-to-do-2d-histograms-in-r/)
+- [G-test of independence](http://www.biostathandbook.com/gtestind.html)
+- [Log-linear analysis](http://ww2.coastal.edu/kingw/statistics/R-tutorials/loglin.html): for contingency table models
