@@ -39,13 +39,14 @@ Another interesting option is to create interactive reports in the form of web p
 - Make sure your data is in the [appropriate format](http://vita.had.co.nz/papers/tidy-data.html) for these tools.
 - Extracting information from the output of R functions is hard because of the list format. To fix this, try [broom](https://github.com/dgrtwo/broom).
 - Don't use base graphics, go for [lattice](http://science.nature.nps.gov/im/datamgmt/statistics/r/graphics/lattice.cfm) or [ggplot](http://www.r-bloggers.com/ggplot2-cheatsheet-for-visualizing-distributions/).
-- A better interface for transforming data is `plyr`, and for data frames [dplyr](https://github.com/hadley/dplyr).
+- A better interface for transforming data is `plyr`, and for data frames [dplyr](https://github.com/hadley/dplyr). Another alternative for group operations is `doBy`.
 - There are better alternatives for `summary` in [additional packages](http://www.statmethods.net/stats/descriptives.html).
 - Use `reshape2` to convert factor variables to columns or vice versa. See this [tutorial](http://seananderson.ca/2013/10/19/reshape.html).
 - Use `pander` to render tables when using `rmarkdown`.
 - Use the pipe operators (`%.%` from `dplyr`, or `%>%` from [megrittr](https://github.com/smbache/magrittr)). See this [example](http://stackoverflow.com/questions/22314680/how-to-use-the-operator-in-r).
 - A faster data frame implementation is [data.table](http://blog.yhathq.com/posts/fast-summary-statistics-with-data-dot-table.html), still compatible with `dplyr`.
 - A good classification and regression wrapper/tool package that uses parallelization is [caret](http://topepo.github.io/caret/).
+- Use `xtable`, `ftable` and `table` for manipulating and converting contingency tables
 
 # Recommended packages
 
@@ -121,12 +122,18 @@ This is similar to dimensionality reduction, but works with a distance matrix in
 
 ### Misc
 
-- lda: Linear Discriminant Analysis, from `MASS`
-- svm: Support Vector Machines, from `e1701`
-- MCA: Multiple Correspondence Analysis, from [FactoMineR](http://factominer.free.fr/index.html), also includes an R commander GUI
-- likelihood.test: G-test of independence, from `Deducer`
-- klaR: Classification and visualization
-- candisc: visualization of generalized discriminant and correlation analysis
+Individual functions in general packages:
+
+- MASS: contains `lda` for Linear Discriminant Analysis
+- e1701: contains `svm` for Support Vector Machines
+- [FactoMineR](http://factominer.free.fr/index.html): contains `MCA` for Multiple Correspondence Analysis, also includes an R Commander GUI
+- Deducer: includes `likelihood.test` for G-test of independence (alternative to Chi squared test)
+
+Other use cases:
+
+- For exact multinomial tests, there are [XNomial](http://cran.r-project.org/web/packages/XNomial/vignettes/XNomial.html) and `EMT` packages
+- For Voronoi diagrams (centroid and colored areas with equal ditsance to center in plane) there are `tripack` and `geometry` packages. Like centroids of KNN classification, reduced to 2D
+- To compare likelihood of different models, use `lrtest` and `lmtest`
 
 # Resources
 
